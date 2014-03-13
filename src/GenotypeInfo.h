@@ -16,7 +16,7 @@ class LINE {
 
 	public:
 	std::map<std::string,int> GLs;	
-	void setelem(string);	
+	void setelem(string);
 	string chromosome;
 	int position;
 	string snpid;
@@ -24,7 +24,7 @@ class LINE {
 	string individualid;
 	string mom;
 	string dad;
-	string sex;	
+	string sex;
 };
 
 //void LINE::setelem(string line);

@@ -1,7 +1,7 @@
 #ifndef CL_H
 #define CL_H
 #include "cart.h"
-#include "optparse/OptionParser.h"
+#include "../optparse/OptionParser.h"
 
 #include <iostream>
 #include <fstream>

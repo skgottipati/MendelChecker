@@ -24,7 +24,7 @@
 
 
 
-#include "optparse/OptionParser.h"
+#include "../optparse/OptionParser.h"
 
 //#include <boost/math/distributions/chi_squared.hpp>
 //#include <boost/cstdint.hpp>
