@@ -1,7 +1,7 @@
 MendelChecker version 1.0
 
 
-##Default installation:
+##Default installation-
 
 tar -xvfz ./MendelChecker_v1.tar.gz 
 cd ./MendelChecker
