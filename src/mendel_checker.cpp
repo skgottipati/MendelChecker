@@ -77,11 +77,11 @@ int main(int argc, char* argv[]) {
     .disable_interspersed_args()
 #endif
   ;
-	parser.add_option("-f", "--genoped") .dest("filename") .type("string") .help("input geno-ped file name with path") .metavar("FILE");
-	parser.add_option("-g", "--vcf") .dest("vcf") .type("string") .help("input vcf file name with path") .metavar("FILE");
-	parser.add_option("-e", "--ped") .dest("ped") .type("string") .help("input ped file name with path") .metavar("FILE");
+	parser.add_option("-f", "--genoped") .dest("filename") .type("string") .set_default("") .set_default("") .help("input geno-ped file name with path") .metavar("FILE");
+	parser.add_option("-g", "--vcf") .dest("vcf") .type("string") .set_default("") .help("input vcf file name with path") .metavar("FILE");
+	parser.add_option("-e", "--ped") .dest("ped") .type("string") .set_default("") .help("input ped file name with path") .metavar("FILE");
 	parser.add_option("-n", "--snpsperloop") .dest("snpsperloop") .type("int") .set_default(10000) .help("number of snps compute per loop");
-	parser.add_option("-d", "--genofield") .dest("genofield") .type("string") .help("VCF genotype field, options: PL, GL, GP") .set_default("PL");
+	parser.add_option("-d", "--genofield") .dest("genofield") .type("string") .set_default("PL") .help("VCF genotype field, options: PL, GL, GP (default: %default)");
 	parser.add_option("-p", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("default: %default sexPrior");
 	parser.add_option("-u", "--uniform") .dest("uniformFLAG") .type("string").help("default: %default (population), true (uniform)") .set_default("false") .metavar("STRING");
 	
@@ -91,6 +91,22 @@ int main(int argc, char* argv[]) {
 	sec = clock();
 	cout << "argc:" << argc << " : " << options["alpha"] << ":" << options["unif"] << endl;
 	string vcf = (string) options.get("vcf");
+	string pedfilename = (string) options.get("ped");
+	string genofilename = (string) options.get("filename");
+	if (vcf != "")
+	{
+		if (pedfilename == "")
+		{
+			cout << "Pedigree file(.ped) is required." << endl;
+			exit (EXIT_FAILURE);
+		}
+	}
+	if (vcf == "" && genofilename == "")
+	{
+		cout << "A vcf file or a genoped file is required." << endl;
+		exit (EXIT_FAILURE);
+	}
+	
 	if (vcf != ""){
 		std::unordered_map<std::string, double> Penetrance = computePenetrance();
 		std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));

@@ -44,7 +44,7 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
     {
         cout << "Warning: cannot open pedigree file!" << endl;
         file.close();
-        exit;
+        exit (EXIT_FAILURE);
     }
     return pedigree_str;
 }
@@ -405,6 +405,7 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
     else
     {
         cout << "Warning: cannot open the file!" << endl;
+        exit (EXIT_FAILURE);
         //return 0;
     }
 
