@@ -5,7 +5,9 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <string.h>
+//#include <string.h>
+
+using namespace std;
 
 // thanks to Evan Teran, http://stackoverflow.com/questions/236129/how-to-split-a-string/236803#236803
 
@@ -26,26 +28,22 @@ void tokenize(const std::string& str, ContainerT& tokens,
     std::string::size_type pos, lastPos = 0;
     while(true)
     {
-pos = str.find_first_of(delimiters, lastPos);
-if(pos == std::string::npos)
-{
-
-pos = str.length();
-
-if(pos != lastPos || !trimEmpty) {
-tokens.push_back(typename ContainerT::value_type(str.data()+lastPos, (typename ContainerT::value_type::size_type)pos-lastPos));
-}
-
-break;
-}
-else
-{
-if(pos != lastPos || !trimEmpty) {
-tokens.push_back(typename ContainerT::value_type(str.data()+lastPos, (typename ContainerT::value_type::size_type)pos-lastPos));
-}
-}
-
-lastPos = pos + 1;
+        pos = str.find_first_of(delimiters, lastPos);
+        if(pos == std::string::npos)
+        {
+            pos = str.length();
+            if(pos != lastPos || !trimEmpty) {
+                tokens.push_back(typename ContainerT::value_type(str.data()+lastPos, (typename ContainerT::value_type::size_type)pos-lastPos));
+            }
+            break;
+        }
+        else
+        {
+            if(pos != lastPos || !trimEmpty) {
+                tokens.push_back(typename ContainerT::value_type(str.data()+lastPos, (typename ContainerT::value_type::size_type)pos-lastPos));
+            }
+        }
+        lastPos = pos + 1;
     }
 };
 

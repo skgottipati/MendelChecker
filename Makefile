@@ -3,8 +3,8 @@ CC=g++
 # FLAGS for optimization
 CFLAGS=-std=c++11 -O3 -Wall
 SRCDIR=src
-SOURCES= $(SRCDIR)/mcc_series_optimization_sexbased_clean.cpp $(SRCDIR)/fileread3.cpp $(SRCDIR)/computeLikelihood.cpp $(SRCDIR)/cart.cpp $(SRCDIR)/genotypeLikelihood.cpp $(SRCDIR)/GenotypeInfo.cpp optparse/OptionParser.cpp
+SOURCES= $(SRCDIR)/mendel_checker.cpp $(SRCDIR)/split.cpp $(SRCDIR)/genoped.cpp $(SRCDIR)/fileread.cpp $(SRCDIR)/computeLikelihood.cpp $(SRCDIR)/cart.cpp $(SRCDIR)/genotypeLikelihood.cpp $(SRCDIR)/GenotypeInfo.cpp optparse/OptionParser.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=MendelChecker
-all: 
+$(EXECUTABLE): 
 	$(CC) $(CFLAGS) $(SOURCES) -o $@

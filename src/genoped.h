@@ -1,15 +1,33 @@
-#ifndef __SPLIT_H
-#define __SPLIT_H
+#ifndef __GENOPED_H
+#define __GENOPED_H
 
 // functions to split a string by a specific delimiter
-#include <string>
+#include "split.h"
+#include "GenotypeInfo.h"
+#include "computeLikelihood.h"
+#include <iostream>
+#include <fstream>
 #include <vector>
+#include <string>
+#include <map>
+#include <iterator>
+#include <iomanip>
+#include <unordered_map>
 #include <sstream>
-#include <string.h>
+#include <algorithm>
+using namespace std;
+
+vector<string> splitdelim(string line);
+
+std::map<std::string, std::string> pedigree_reader(std::string pedfilename);
+
+std::unordered_map<std::string, int> generateGTmap(vector<string> alleles);
+
+std::unordered_map<std::string, double> computePenetrance();
+
+void read_geno(string genofield, int numsnps, std::string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG);
 
 
-void pedigree_reader(string pedfilename);
-
-void parse(string& line, bool parseSamples);
+//void parse(string& line, bool parseSamples);
 
 #endif

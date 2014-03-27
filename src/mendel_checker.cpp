@@ -1,4 +1,5 @@
-#include "fileread3.h"
+#include "fileread.h"
+#include "genoped.h"
 
 
 #include <iostream>
@@ -20,7 +21,6 @@
 #include "genotypeLikelihood.h"
 #include "cart.h"
 #include "computeLikelihood.h"
-
 
 
 
@@ -77,22 +77,27 @@ int main(int argc, char* argv[]) {
     .disable_interspersed_args()
 #endif
   ;
-	parser.add_option("-f", "--genoped") .dest("filename") .help("input geno-ped file name with path") .metavar("FILE");
-	parser.add_option("-g", "--vcf") .dest("vcf") .help("input vcf file name with path") .metavar("FILE");
-	parser.add_option("-e", "--ped") .dest("ped") .help("input ped file name with path") .metavar("FILE");
+	parser.add_option("-f", "--genoped") .dest("filename") .type("string") .help("input geno-ped file name with path") .metavar("FILE");
+	parser.add_option("-g", "--vcf") .dest("vcf") .type("string") .help("input vcf file name with path") .metavar("FILE");
+	parser.add_option("-e", "--ped") .dest("ped") .type("string") .help("input ped file name with path") .metavar("FILE");
+	parser.add_option("-n", "--snpsperloop") .dest("snpsperloop") .type("int") .set_default(1000) .help("number of snps compute per loop");
+	parser.add_option("-d", "--genofield") .dest("genofield") .type("string") .help("VCF genotype field, options: PL, GL, GP") .set_default("PL");
 	parser.add_option("-p", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("default: %default sexPrior");
 	parser.add_option("-u", "--uniform") .dest("uniformFLAG") .type("string").help("default: %default (population), true (uniform)") .set_default("false") .metavar("STRING");
 	
 	Values& options = parser.parse_args(argc, argv);
-	vector<string> args = parser.args();  
+	vector<string> args = parser.args();
 	clock_t sec;
 	sec = clock();
-//	double alpha = 0.05;
 	cout << "argc:" << argc << " : " << options["alpha"] << ":" << options["unif"] << endl;
-	//if (argc > 2)
-	//    alpha = atof(argv[2]);
-//	fileread3(argv, alpha);
-	fileread3(options["filename"], (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+	string vcf = (string) options.get("vcf");
+	if (vcf != ""){
+		std::unordered_map<std::string, double> Penetrance = computePenetrance();
+		std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
+		read_geno((string) options.get("genofield"), (int) options.get("snpsperloop"),(string) options.get("vcf"), &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+	}
+	else
+		fileread(options["filename"], (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	cout << options["alpha"] << ":" << sizeof(double) << endl;
 	sec = clock() - sec;
 	cout << "Compute time : "  << "\t" << ((long double)sec/CLOCKS_PER_SEC) << " seconds" <<  endl;

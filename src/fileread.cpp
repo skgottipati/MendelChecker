@@ -1,4 +1,4 @@
-#include "fileread3.h"
+#include "fileread.h"
 
 #include "computeLikelihood.h"
 
@@ -15,7 +15,7 @@ std::string getFileName(const std::string strPath)
 
 
 //void fileread3(char* argv[], double alpha){
-void fileread3(string fname, double alpha, string unfFLAG){
+void fileread(string fname, double alpha, string unfFLAG){
 
 	ifstream file (fname, ios::in|ios::ate);
 	std::ifstream inFile(fname);
