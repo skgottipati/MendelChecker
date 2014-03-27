@@ -80,7 +80,7 @@ int main(int argc, char* argv[]) {
 	parser.add_option("-f", "--genoped") .dest("filename") .type("string") .help("input geno-ped file name with path") .metavar("FILE");
 	parser.add_option("-g", "--vcf") .dest("vcf") .type("string") .help("input vcf file name with path") .metavar("FILE");
 	parser.add_option("-e", "--ped") .dest("ped") .type("string") .help("input ped file name with path") .metavar("FILE");
-	parser.add_option("-n", "--snpsperloop") .dest("snpsperloop") .type("int") .set_default(1000) .help("number of snps compute per loop");
+	parser.add_option("-n", "--snpsperloop") .dest("snpsperloop") .type("int") .set_default(10000) .help("number of snps compute per loop");
 	parser.add_option("-d", "--genofield") .dest("genofield") .type("string") .help("VCF genotype field, options: PL, GL, GP") .set_default("PL");
 	parser.add_option("-p", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("default: %default sexPrior");
 	parser.add_option("-u", "--uniform") .dest("uniformFLAG") .type("string").help("default: %default (population), true (uniform)") .set_default("false") .metavar("STRING");

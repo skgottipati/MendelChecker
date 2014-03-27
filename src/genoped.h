@@ -21,12 +21,15 @@ vector<string> splitdelim(string line);
 
 std::map<std::string, std::string> pedigree_reader(std::string pedfilename);
 
+vector<string> get_individuals_from_pedigreemap(const std::map<std::string, std::string>* pedigree);
+
 std::unordered_map<std::string, int> generateGTmap(vector<string> alleles);
 
 std::unordered_map<std::string, double> computePenetrance();
 
-void read_geno(string genofield, int numsnps, std::string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG);
+std::string get_FileName(const std::string strPath);
 
+void read_geno(string genofield, int numsnps, std::string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG);
 
 //void parse(string& line, bool parseSamples);
 

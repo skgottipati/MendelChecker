@@ -187,6 +187,14 @@ std::unordered_map<std::string, double> computePenetrance(){
 }
 
 
+std::string get_FileName(const std::string strPath)
+{
+	size_t iLastSeparator = 0;
+//	cout << strPath.substr(iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0 << endl;
+	cout << strPath.size()  << "\t" << strPath.find_last_of(".") << endl;
+//	return strPath.substr((iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0, strPath.size() - strPath.find_last_of("."));
+	return strPath.substr(0, strPath.find_last_of("."));
+}
 
 
 
@@ -203,12 +211,42 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
     snps.reserve(numsnps);
     vector< vector< LINE>> founders;
     vector< LINE> pl;
-    pl.reserve(100);
     vector< vector <LINE>> pp;
     vector< LINE> q;
     string famid;
     
-    
+    string filename = vcfname;
+    ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out );
+    mfglfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t" ;
+    for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
+    {
+            mfglfile << *gt << "\t";
+    }
+    mfglfile << "SUM_GL" << endl;
+    mfglfile.close();
+
+    ofstream popGTfile (filename+"_populationGL.txt", ios::out );
+    popGTfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t";
+    for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
+    {
+            popGTfile << *gt << "\t";
+    }
+    popGTfile <<  "SUM_GL" << endl;
+    popGTfile.close();
+
+    ofstream ulfile (filename+"_uninformativelikelihoods.txt", ios::out );
+    ulfile << "SNPID" << "\t" << "OFFSPRINGS" << "\t"  << "uninfL" << endl;
+    ulfile.close();
+
+    ofstream plfile (filename+"_pedigreelikelihoods.txt", ios::out);
+    plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO"<< "\t" << "CPUtime" << endl;
+    ofstream plsfile (filename+"_snpScores.txt", ios::out  );
+//	plsfile << "SNPID" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"LRT" << "\t" << "dof" << "\t" << "Pvalue" << endl;
+    plsfile << "SNP" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"PP_sex" << endl;
+    plfile.close();
+    plsfile.close();
+        
+        
     if (file.is_open()){
     	file.seekg (0, ios::beg);
         cout << "file is open" << endl;
