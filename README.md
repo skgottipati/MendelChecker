@@ -40,6 +40,7 @@ Several options are available using the command line:
 
 ###Usage information
 
+	$ ./MendelChecker --vcf test_data/test.recode.vcf --ped test.ped --sexPrior 0.05 --genofield PL --snpsperloop 1000
 
 For more information, please visit http://code.google.com/p/mendelchecker/wiki/Documentation
 
