@@ -1,7 +1,7 @@
 ###MendelChecker
-#### a C++ software for 
-#### author: S. Gottipati <skgottipati@gmail.com>
-#### licence: GNU
+a C++ software for quality control in next generation sequencing using Mendelian inheritance in pedigrees.
+author: S. Gottipati <skgottipati@gmail.com>
+licence: GNU-GPL
 ---
 
 ###Requirements
