@@ -1,31 +1,44 @@
-#MendelChecker
-### a C++ software for 
+###MendelChecker
+#### a C++ software for 
 #### author: S. Gottipati <skgottipati@gmail.com>
 #### licence: GNU
 ---
 
-##Default installation-
+###Requirements
 
-tar -xvfz ./MendelChecker_v1.tar.gz 
-cd ./MendelChecker
-make
+GCC compiler version >4.7 is required.
 
-##Installation
+### Compiling
 
-tar -xvfz ./MendelChecker_v1.tar.gz 
-cd ./MendelChecker
-#change '/usr/defined/path/' accordingly
-make /usr/defined/path/
+Using wget to download the zip file on Unix/Linux machines
 
-##Usage information
-##Running the MendelChecker with no additional input will display usage options
+$ wget https://github.com/skgottipati/MendelChecker/archive/master.zip
+$ unzip -a master.zip
+$ mv MendelChecker-master MendelChecker
+$ cd MendelChecker
+$ make
 
-cd ./MendelChecker
-./MendelChecker
+You could also checkout directly from github source repository for the latest version of the software.
 
-##For more information, visit http://code.google.com/p/mendelchecker/wiki/Documentation
+$ git clone git://github.com/skgottipati/MendelChecker.git
+$ cd MendelChecker
+$ make
 
-##If you use MendelChecker, please cite 
+
+###Usage information
+
+
+For more information, please visit http://code.google.com/p/mendelchecker/wiki/Documentation
+
+###If you use MendelChecker, please cite 
+
+
+    @misc{Jia13caffe,
+      Author = {Van Hout, C.V., Chen N., Gotipati S., Clark A.G., },
+      Title = { MendelChecker: Quality Control for Next Generation Sequencing Using Mendelian Inheritance in Pedigrees},
+      Year  = {2014},
+      Howpublished = {Bioinformatics}
+    }
 Van Hout, C.V., Chen N., Gotipati S., Clark A.G., MendelChecker: Quality Control for Next Generation Sequencing Using Mendelian Inheritance in Pedigrees, Bioinformatics 2014.
 
 and
