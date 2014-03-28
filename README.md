@@ -1,7 +1,7 @@
 ###MendelChecker
 a C++ software for quality control in next generation sequencing using Mendelian inheritance in pedigrees.
 author: S. Gottipati <skgottipati@gmail.com>
-licence: GNU-GPL
+
 ---
 
 ###Requirements
@@ -24,6 +24,18 @@ You could also checkout directly from github source repository for the latest ve
 	$ cd MendelChecker
 	$ make
 
+###Command line options
+
+Options:
+	-h, --help            show this help message and exit
+	--version             show program's version number and exit
+	-f FILE, --genoped=FILE	input geno-ped file name with path
+	-g FILE, --vcf=FILE	input vcf file name with path
+	-e FILE, --ped=FILE	input ped file name with path
+	-n INT, --snpsperloop=INT	number of snps compute per loop
+	-d STRING, --genofield=STRING	VCF genotype field, options: PL, GL, GP (default: PL)
+	-p DOUBLE, --sexPrior=DOUBLE	default: 0.05 sexPrior
+	-u STRING, --uniform=STRING	default: false (population), true (uniform)
 
 ###Usage information
 
