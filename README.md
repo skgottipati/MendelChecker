@@ -26,16 +26,17 @@ You could also checkout directly from github source repository for the latest ve
 
 ###Command line options
 
-Options:
-	-h, --help            show this help message and exit
-	--version             show program's version number and exit
-	-f FILE, --genoped=FILE	input geno-ped file name with path
-	-g FILE, --vcf=FILE	input vcf file name with path
-	-e FILE, --ped=FILE	input ped file name with path
-	-n INT, --snpsperloop=INT	number of snps compute per loop
-	-d STRING, --genofield=STRING	VCF genotype field, options: PL, GL, GP (default: PL)
-	-p DOUBLE, --sexPrior=DOUBLE	default: 0.05 sexPrior
-	-u STRING, --uniform=STRING	default: false (population), true (uniform)
+Several options are available using the command line:
+
+	-h, --help            	show this help message and exit
+	-v, --version           show program's version number and exit
+	-f, --genoped=FILE	input geno-ped file name with path
+	-g, --vcf=FILE		input vcf file name with path
+	-e, --ped=FILE		input ped file name with path
+	-n, --snpsperloop=INT	number of snps compute per loop
+	-d, --genofield=STRING	VCF genotype field, options: PL, GL, GP (default: PL)
+	-p, --sexPrior=DOUBLE	default: 0.05 sexPrior
+	-u, --uniform=STRING	default: false (population), true (uniform)
 
 ###Usage information
 
