@@ -1,6 +1,7 @@
-#ifndef FR_H
-#define FR_H
+#ifndef VP_H
+#define VP_H
 
+#include "split.h"
 #include "GenotypeInfo.h"
 #include "genotypeLikelihood.h"
 
@@ -20,8 +21,13 @@
 #include <unordered_map>
 #include <ctime>
 
+
 using namespace std;
-void verify_snps(vector< vector <vector <LINE>>> snps, vector< vector< LINE>> founders);
+
+void verify_nuclear_family(std::vector<std::string> fam);
+
+void verify_pedigrees(std::map<std::string, std::string> pedigree);
+//void verify_snps(vector< vector <vector <LINE>>> snps, vector< vector< LINE>> founders);
 
 
 #endif

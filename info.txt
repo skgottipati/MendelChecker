@@ -1,0 +1,1 @@
+g++ -std=c++11 -O3 -Wall src/mendel_checker.cpp src/split.cpp src/genoped.cpp src/verify_snps.cpp src/fileread.cpp src/computeLikelihood.cpp src/cart.cpp src/genotypeLikelihood.cpp src/GenotypeInfo.cpp optparse/OptionParser.cpp -o MendelChecker

@@ -1,6 +1,6 @@
-#include "fileread.h"
 #include "genoped.h"
-
+#include "verify_snps.h"
+#include "fileread.h"
 
 #include <iostream>
 #include <string>
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
 	vector<string> args = parser.args();
 	clock_t sec;
 	sec = clock();
-	cout << "argc:" << argc << " : " << options["alpha"] << ":" << options["unif"] << endl;
+	//cout << "argc:" << argc << " : " << options["alpha"] << ":" << options["unif"] << endl;
 	string vcf = (string) options.get("vcf");
 	string pedfilename = (string) options.get("ped");
 	string genofilename = (string) options.get("filename");
@@ -110,10 +110,14 @@ int main(int argc, char* argv[]) {
 	if (vcf != ""){
 		std::unordered_map<std::string, double> Penetrance = computePenetrance();
 		std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
+		verify_pedigrees(pedigree);
 		read_geno((string) options.get("genofield"), (int) options.get("snpsperloop"),(string) options.get("vcf"), &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
-	else
+	else if (genofilename != "")
+	{
+		verify_pedigrees(pedigree);
 		fileread(options["filename"], (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+	}
 	cout << options["alpha"] << ":" << sizeof(double) << endl;
 	sec = clock() - sec;
 	cout << "Compute time : "  << "\t" << ((long double)sec/CLOCKS_PER_SEC) << " seconds" <<  endl;
