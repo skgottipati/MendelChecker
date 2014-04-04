@@ -73,7 +73,7 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
     string famid = "";
     vector<std::string> fam;
     vector<string> famidped;
-    int pedind = 1;
+    unsigned int pedind = 1;
     //cout << pedigree.size() << endl;
     cout << "Running verification of pedigree file." << endl;
     

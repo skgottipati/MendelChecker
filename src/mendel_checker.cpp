@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 	}
 
 #ifndef DISABLE_USAGE
-  const string usage = "usage: %prog [OPTION]... DIR [FILE]...";
+  const string usage = "\nusage: %prog [OPTION]... DIR [FILE]...";
 #else
   const string usage = SUPPRESS_USAGE;
 #endif
@@ -65,8 +65,8 @@ int main(int argc, char* argv[]) {
     "<http://gnu.org/licenses/gpl.html>.\n"
     "This is free software: you are free to change and redistribute it.\n"
     "There is NO WARRANTY, to the extent permitted by law.";
-  const string desc = "Mendel checker";
-  const string epilog = "This program is great....please use it!!!";
+  const string desc = "MendelChecker: A C++ software for quality control in next generation sequencing using Mendelian inheritance in pedigrees";
+  const string epilog = "For more information, please visit http://code.google.com/p/mendelchecker/wiki/Documentation\n";
 
   OptionParser parser = OptionParser()
     .usage(usage)
@@ -106,21 +106,23 @@ int main(int argc, char* argv[]) {
 		cout << "A vcf file or a genoped file is required." << endl;
 		exit (EXIT_FAILURE);
 	}
+
+	std::unordered_map<std::string, double> Penetrance = computePenetrance();
+	std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
+	verify_pedigrees(pedigree);
 	
 	if (vcf != ""){
-		std::unordered_map<std::string, double> Penetrance = computePenetrance();
-		std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
-		verify_pedigrees(pedigree);
 		read_geno((string) options.get("genofield"), (int) options.get("snpsperloop"),(string) options.get("vcf"), &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
 	else if (genofilename != "")
 	{
-		verify_pedigrees(pedigree);
 		fileread(options["filename"], (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
 	cout << options["alpha"] << ":" << sizeof(double) << endl;
 	sec = clock() - sec;
 	cout << "Compute time : "  << "\t" << ((long double)sec/CLOCKS_PER_SEC) << " seconds" <<  endl;
+	
+	return 0;
 
 }
 

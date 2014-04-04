@@ -16,8 +16,8 @@ vector<string> splitdelim(string line){
 
 std::map<std::string, std::string> pedigree_reader(string pedfilename){
     
-    std::ifstream inFile(pedfilename);
-    long numlines =  std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');  
+    //std::ifstream inFile(pedfilename);
+    //long numlines =  std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');  
     ifstream file (pedfilename, ios::in|ios::ate);
     std::map<std::string, std::string> pedigree_str;
     if (file.is_open()){
@@ -189,7 +189,7 @@ std::unordered_map<std::string, double> computePenetrance(){
 
 std::string get_FileName(const std::string strPath)
 {
-	size_t iLastSeparator = 0;
+	//size_t iLastSeparator = 0;
 //	cout << strPath.substr(iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0 << endl;
 	cout << strPath.size()  << "\t" << strPath.find_last_of(".") << endl;
 //	return strPath.substr((iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0, strPath.size() - strPath.find_last_of("."));

@@ -150,7 +150,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 	}
 
 
-	std:map<std::string, long double> popGT;
+	std::map<std::string, long double> popGT;
 
 //	ofstream popGTfile ("/home/chaitanya/Desktop/nancy/populationGL.txt", ios::out );
 //	if (func_call == 1)
@@ -378,13 +378,13 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 	long double inflik_X;
 	string plfamid;
 	string plsnpid;
-	int snp_count = 0;
+	//int snp_count = 0;
 	long int sec;
 	time_t seconds;
 	long double pedlrtA = 0;
 	long double pedlrtX = 0;
 	long double llr= 0;
-	long double pval = 0;
+	//long double pval = 0;
 	
 //	ofstream pedlrtfile (filename+"_pedigreeLRTstatistic.txt", ios::out|ios::app );
 
@@ -441,7 +441,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 		}
 		fm++;
 		vecp++;
-		double LLRstatistic = -2*(pedLAut-pedLSex);
+		//double LLRstatistic = -2*(pedLAut-pedLSex);
 //		double alpha = 0.067;
 		long double normL = (alpha * exp(pedLSex) + (1-alpha) * exp(pedLAut));
 		long double posterior_Prob_Sex_linkage = (alpha * exp(pedLSex ))/normL;

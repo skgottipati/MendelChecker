@@ -5,7 +5,7 @@
 
 std::string getFileName(const std::string strPath)
 {
-	size_t iLastSeparator = 0;
+	//size_t iLastSeparator = 0;
 //	cout << strPath.substr(iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0 << endl;
 	cout << strPath.size()  << "\t" << strPath.find_last_of(".") << endl;
 //	return strPath.substr((iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0, strPath.size() - strPath.find_last_of("."));
@@ -24,10 +24,10 @@ void fileread(string fname, double alpha, string unfFLAG){
 	string filename = getFileName(fname);
 	cout << filename << "\t alpha: " << alpha << endl;
   	long numlines =  std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');
-	int running_size = 0;
-	std::streamsize step_size = 300;
+	//int running_size = 0;
+	//std::streamsize step_size = 300;
 	cout << "Number of lines : " << numlines << endl;
-	long size;
+	//long size;
 
 	int bufsize = 0;
 	int snp_count = 0;
@@ -37,9 +37,9 @@ void fileread(string fname, double alpha, string unfFLAG){
 	int snpsperloop = 100;
 	snps.reserve(snpsperloop);
 
-	auto it = snps.begin();	
+	//auto it = snps.begin();	
 	cout <<  "snps capacity " << snps.capacity() << endl;
-	int i = -1;
+	//int i = -1;
 	string chrom = "-1";
 	int pos = -1;
 	string mom = "-1";
@@ -51,7 +51,7 @@ void fileread(string fname, double alpha, string unfFLAG){
 	pl.reserve(100);
 	vector< vector <LINE>> pp;
 	vector< LINE> q;
-	int r = 0;
+	//int r = 0;
 
 
 //	defining genotypes
@@ -271,7 +271,7 @@ void fileread(string fname, double alpha, string unfFLAG){
 						bufsize = 0;
 						bufsize += line.size();
 					}
-					if (snps.size() == snpsperloop)
+					if (snps.size() == (unsigned int) snpsperloop)
 					{
 						cout << "snp count " << snpsperloop << endl;
 //						pp.emplace_back(pl);

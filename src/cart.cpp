@@ -34,7 +34,7 @@ long double cart_product(Vi& in, std::unordered_map<std::string, double> Penetra
 
 		long double founder_prod = 1;
 		string founder_genotype = "";
-		int run =0;
+		//int run =0;
 
 
 		for (Vd::const_iterator it = founders_GLiter.begin(); it != founders_GLiter.end(); it++)
