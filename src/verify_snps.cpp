@@ -62,6 +62,7 @@ void verify_nuclear_family(std::vector<std::string> fam){
         throw "One or both parents are missing";
     else if (parents.size()>2)
         throw "More than 2 parents exist in this family";
+    
     parents.clear();
     offsprings.clear();
 }

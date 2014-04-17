@@ -22,7 +22,7 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
     std::map<std::string, std::string> pedigree_str;
     if (file.is_open()){
     	file.seekg (0, ios::beg);
-        cout << "pedigree file is open" << endl;
+        cout << "Reading pedigree file." << endl;
         string line;
         while(getline(file, line))
         {
@@ -35,7 +35,7 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
                     ss1 << fields[3] << ":" << fields[0];
                     std::string s1 = ss1.str();
                     pedigree_str.insert(std::make_pair(s1, s2));
-                    cout << s1 << "\t" << s2 << endl;
+                    //cout << s1 << "\t" << s2 << endl;
                 }
         }
         file.close();
@@ -106,7 +106,7 @@ std::unordered_map<std::string, double> computePenetrance(){
     
 //	generating transition probability map
     
-    cout << "Generating transition probabilities" << endl;
+    cout << "Generating transition probabilities." << endl;
 
     std::unordered_map<std::string, double> Penetrance;
 
@@ -216,14 +216,14 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
     string famid;
     
     string filename = vcfname;
-    ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out );
-    mfglfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t" ;
-    for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
-    {
-            mfglfile << *gt << "\t";
-    }
-    mfglfile << "SUM_GL" << endl;
-    mfglfile.close();
+    //ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out );
+    //mfglfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t" ;
+    //for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
+    //{
+    //        mfglfile << *gt << "\t";
+    //}
+    //mfglfile << "SUM_GL" << endl;
+    //mfglfile.close();
 
     ofstream popGTfile (filename+"_populationGL.txt", ios::out );
     popGTfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t";
@@ -249,11 +249,11 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
         
     if (file.is_open()){
     	file.seekg (0, ios::beg);
-        cout << "file is open" << endl;
+        cout << "Reading VCF file." << endl;
         string line;
         while(1){
             if(!getline(file, line)){
-                cout << line << "break" << endl; 						
+//                cout << line << "break" << endl; 						
                 //pp.emplace_back(pl);
                 //snps.emplace_back(pp);
                 //founders.emplace_back(q);
@@ -269,6 +269,7 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
                     vector<string> fields = split(line, '\t');
                     samples.reserve(fields.size()-9);
                     samples.assign(fields.begin()+9, fields.end());
+                    cout << samples.size() << " samples were found in the VCF file." << endl;
                     for (auto sam = samples.begin(); sam!= samples.end(); sam++ )
                         cout << *sam << "\t";
                     cout << endl;
@@ -347,7 +348,7 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
                     //    cout << it->first << "\t" << it->second << "\t" << ": " <<sample_GLs.size() << endl;
                     int pedcount = 0;
                     for (auto ped=pedigree->begin(); ped!=pedigree->end(); ped++){
-                        cout << ped->first << endl;
+//                        cout << ped->first << endl;
                         vector<string> pedkey = split(ped->first, ":");
                         std::stringstream sspedsnp;
                         sspedsnp << chrom << "\t" << pos << "\t" << snpid << "\t" << ped->second << "\t" << sample_GLs.at(pedkey.at(1));

@@ -32,101 +32,101 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 
 //	mean of founder alleles
 
-	cout << "Computing mean of founder genotype likelihoods" << endl;
-
-	vector<founders_mean_GLs> FMGLs;
-	FMGLs.reserve(founders.size());
-	
-	LINE temp_founder;
-	std::map<std::string,long double> GL;
-
-	std::map<std::string,long double> meanGL;
-	for (int i=0; i<10; i++)
-	{
-		meanGL.insert(std::make_pair(genotypes[i], 0.0));
-	}
-
-
-//	ofstream mfglfile ("/home/chaitanya/Desktop/nancy/meanFounderGL.txt", ios::out );
-//	if (func_call == 1)
+//	cout << "Computing mean of founder genotype likelihoods" << endl;
+//
+//	vector<founders_mean_GLs> FMGLs;
+//	FMGLs.reserve(founders.size());
+//	
+//	LINE temp_founder;
+//	std::map<std::string,long double> GL;
+//
+//	std::map<std::string,long double> meanGL;
+//	for (int i=0; i<10; i++)
 //	{
-////		ofstream mfglfile ("/home/chaitanya/Desktop/nancy/meanFounderGL.txt", ios::out );
-//		mfglfile << "SNPID" << "\t" << "#FOUNDERSwData" << "\t" ;
+//		meanGL.insert(std::make_pair(genotypes[i], 0.0));
+//	}
+//
+//
+////	ofstream mfglfile ("/home/chaitanya/Desktop/nancy/meanFounderGL.txt", ios::out );
+////	if (func_call == 1)
+////	{
+//////		ofstream mfglfile ("/home/chaitanya/Desktop/nancy/meanFounderGL.txt", ios::out );
+////		mfglfile << "SNPID" << "\t" << "#FOUNDERSwData" << "\t" ;
+////		for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
+////		{
+////			mfglfile << *gt << "\t";
+////		}
+////		mfglfile << "SUM_GL" << endl;
+////	}
+////	else
+////	{
+////		mfglfile.close();
+//		ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out|ios::app  );
+////	}
+//	for (vector< vector<LINE> >::size_type i = 0; i < founders.size(); i++)
+//	{
+//		founders_mean_GLs fmgl;
+//		int num_founders = 0;
+//		long double check_norm = 0;
+//		for (auto mpos = meanGL.begin(); mpos != meanGL.end(); mpos++)
+//			mpos->second = 0;
+//		for (vector< LINE> ::size_type j = 0; j < founders[i].size(); j++)
+//		{
+//
+//			temp_founder = founders[i][j];
+//
+////			cout << temp_founder.snpid << "\t";
+//			auto cpos = temp_founder.GLs.begin();
+//			if (cpos->second == -1) continue;
+//			else
+//			{
+//				GL = phred2prob(temp_founder);
+//				for (auto pos = GL.begin(); pos != GL.end(); pos++)
+//				{
+//					meanGL[pos->first]+=pos->second;
+//		
+//				}
+//				num_founders++;
+//			}					
+//			
+//			
+//		}
+//		if (num_founders !=0)
+//		{
+//			for (auto mpos = meanGL.begin(); mpos != meanGL.end(); mpos++)
+//			{
+//				mpos->second = mpos->second/num_founders;
+//				check_norm += mpos->second;
+//			}
+//		}
+//		else
+//		{
+//			for (auto mpos = meanGL.begin(); mpos != meanGL.end(); mpos++)
+//			{
+//				mpos->second = 0.1;
+//				check_norm += mpos->second;
+//			}
+//
+//		}
+//		
+//		
+//		fmgl.set_snpid(temp_founder.snpid);
+//		fmgl.set_GLs(meanGL);
+//		FMGLs.emplace_back(fmgl);
+////		cout << founders[i].size() << "\t" << fmgl.snpid << endl;
+//		mfglfile <<  fmgl.snpid << "\t" << num_founders <<  "\t" ;
 //		for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
 //		{
-//			mfglfile << *gt << "\t";
+//			if (meanGL.find(*gt) == meanGL.end())
+//				mfglfile << "0" << "\t";
+//			else
+//				mfglfile << meanGL[*gt] << "\t";
 //		}
-//		mfglfile << "SUM_GL" << endl;
+//		mfglfile << check_norm << endl;
+//		
 //	}
-//	else
-//	{
-//		mfglfile.close();
-		ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out|ios::app  );
-//	}
-	for (vector< vector<LINE> >::size_type i = 0; i < founders.size(); i++)
-	{
-		founders_mean_GLs fmgl;
-		int num_founders = 0;
-		long double check_norm = 0;
-		for (auto mpos = meanGL.begin(); mpos != meanGL.end(); mpos++)
-			mpos->second = 0;
-		for (vector< LINE> ::size_type j = 0; j < founders[i].size(); j++)
-		{
-
-			temp_founder = founders[i][j];
-
-//			cout << temp_founder.snpid << "\t";
-			auto cpos = temp_founder.GLs.begin();
-			if (cpos->second == -1) continue;
-			else
-			{
-				GL = phred2prob(temp_founder);
-				for (auto pos = GL.begin(); pos != GL.end(); pos++)
-				{
-					meanGL[pos->first]+=pos->second;
-		
-				}
-				num_founders++;
-			}					
-			
-			
-		}
-		if (num_founders !=0)
-		{
-			for (auto mpos = meanGL.begin(); mpos != meanGL.end(); mpos++)
-			{
-				mpos->second = mpos->second/num_founders;
-				check_norm += mpos->second;
-			}
-		}
-		else
-		{
-			for (auto mpos = meanGL.begin(); mpos != meanGL.end(); mpos++)
-			{
-				mpos->second = 0.1;
-				check_norm += mpos->second;
-			}
-
-		}
-		
-		
-		fmgl.set_snpid(temp_founder.snpid);
-		fmgl.set_GLs(meanGL);
-		FMGLs.emplace_back(fmgl);
-//		cout << founders[i].size() << "\t" << fmgl.snpid << endl;
-		mfglfile <<  fmgl.snpid << "\t" << num_founders <<  "\t" ;
-		for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
-		{
-			if (meanGL.find(*gt) == meanGL.end())
-				mfglfile << "0" << "\t";
-			else
-				mfglfile << meanGL[*gt] << "\t";
-		}
-		mfglfile << check_norm << endl;
-		
-	}
-	mfglfile.close();
-	cout << "Done!!!" << endl;
+//	mfglfile.close();
+//	cout << "Done!!!" << endl;
 
 
 //	population genotype vector from founder genotypes
@@ -191,7 +191,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 				allelePr["G"] += 2*pGL["GG"] + pGL["AG"] + pGL["CG"] + pGL["GT"];
 				allelePr["T"] += 2*pGL["TT"] + pGL["AT"] + pGL["CT"] + pGL["GT"];
 				num_founders++;
-			}					
+			}		
 			
 			
 		}

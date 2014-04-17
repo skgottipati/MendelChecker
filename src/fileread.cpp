@@ -157,14 +157,14 @@ void fileread(string fname, double alpha, string unfFLAG){
 	//trprfile.close();
 
 
-	ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out );
-	mfglfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t" ;
-	for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
-	{
-		mfglfile << *gt << "\t";
-	}
-	mfglfile << "SUM_GL" << endl;
-	mfglfile.close();
+	//ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out );
+	//mfglfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t" ;
+	//for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
+	//{
+	//	mfglfile << *gt << "\t";
+	//}
+	//mfglfile << "SUM_GL" << endl;
+	//mfglfile.close();
 
 	ofstream popGTfile (filename+"_populationGL.txt", ios::out );
 	popGTfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t";

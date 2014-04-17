@@ -20,7 +20,7 @@ std::map<std::string,long double> phred2prob(LINE snp);
 class GLPROB {
 
 	public:
-	std::map<std::string,long double> GLs;	
+	std::map<std::string,long double> GLs;
 	void setelem(LINE&, map<string, long double>&, string);
 	string chromosome;
 	int position;
