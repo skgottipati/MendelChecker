@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 	if (argc < 2) 
 	{
 		cerr << "Usage: input file name is required\n";
-		return EXIT_FAILURE;
+		exit (EXIT_FAILURE);
 	}
 
 #ifndef DISABLE_USAGE
@@ -104,6 +104,12 @@ int main(int argc, char* argv[]) {
 	if (vcf == "" && genofilename == "")
 	{
 		cout << "A vcf file or a genoped file is required." << endl;
+		exit (EXIT_FAILURE);
+	}
+	double alp = (double) options.get("sexPrior");
+	if (alp*(1-alp)<=0)
+	{
+		cout << "Sex prior should be set to a value between 0 and 1." << endl;
 		exit (EXIT_FAILURE);
 	}
 

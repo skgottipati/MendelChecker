@@ -152,22 +152,24 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 
 	std::map<std::string, long double> popGT;
 
-//	ofstream popGTfile ("/home/chaitanya/Desktop/nancy/populationGL.txt", ios::out );
-//	if (func_call == 1)
-//	{
-////		ofstream popGTfile ("/home/chaitanya/Desktop/nancy/populationGL.txt", ios::out );
-//		popGTfile << "SNPID" << "\t" << "#FOUNDERSwData" << "\t";
-//		for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
-//		{
-//			popGTfile << *gt << "\t";
-//		}
-//		popGTfile <<  "SUM_GL" << endl;
-//	}
-//	else
-//	{	
-//		popGTfile.close();
-		ofstream popGTfile (filename+"_populationGL.txt", ios::out|ios::app  );
-//	}
+////	ofstream popGTfile ("/home/chaitanya/Desktop/nancy/populationGL.txt", ios::out );
+////	if (func_call == 1)
+////	{
+//////		ofstream popGTfile ("/home/chaitanya/Desktop/nancy/populationGL.txt", ios::out );
+////		popGTfile << "SNPID" << "\t" << "#FOUNDERSwData" << "\t";
+////		for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
+////		{
+////			popGTfile << *gt << "\t";
+////		}
+////		popGTfile <<  "SUM_GL" << endl;
+////	}
+////	else
+////	{	
+////		popGTfile.close();
+//		ofstream popGTfile (filename+"_populationGL.txt", ios::out|ios::app  );
+////	}
+
+	//ofstream popGTfile (filename+"_populationGL.txt", ios::out|ios::app  );
 	for (vector< vector<LINE> >::size_type i = 0; i < founders.size(); i++)
 	{
 		founders_mean_GLs popgl;
@@ -239,23 +241,23 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 		popgl.set_GLs(popGT);
 		popGLs.emplace_back(popgl);
 //		cout << founders[i].size() << "\t" << fmgl.snpid << endl;
-		popGTfile <<  popgl.snpid << "\t" << num_founders <<  "\t" ;
+		//popGTfile <<  popgl.snpid << "\t" << num_founders <<  "\t" ;
 //		for (auto mpos = popGT.begin(); mpos != popGT.end(); mpos++)
 //		{
 //			popGTfile << mpos->first << ":" << mpos->second << ",";
 //		}
-		for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
-		{
-			if (popGT.find(*gt) == popGT.end())
-				popGTfile << "0" << "\t";
-			else
-				popGTfile << popGT[*gt] << "\t";
-		}
-		popGTfile <<  popGTtot << endl;
+		//for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
+		//{
+		//	if (popGT.find(*gt) == popGT.end())
+		//		popGTfile << "0" << "\t";
+		//	else
+		//		popGTfile << popGT[*gt] << "\t";
+		//}
+		//popGTfile <<  popGTtot << endl;
 		popGT.clear();
 		
 	}
-	popGTfile.close();
+	//popGTfile.close();
 	cout << "Done!!!" << endl;
 
 
@@ -274,8 +276,10 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 //	else
 //	{
 //		ulfile.close();
-		ofstream ulfile (filename+"_uninformativelikelihoods.txt", ios::out|ios::app  );
+//		ofstream ulfile (filename+"_uninformativelikelihoods.txt", ios::out|ios::app  );
 //	}
+
+	//ofstream ulfile (filename+"_uninformativelikelihoods.txt", ios::out|ios::app  );
 	vector < std::map<string, long double>> UninfLikelihoods;
 //	auto ufm=FMGLs.begin();
 	auto ufm=popGLs.begin();
@@ -318,29 +322,29 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 				{
 					ulikelihood = cart_product(glpv, Penetrance, "A");
 					fammap.insert(std::make_pair(famkeyA, ulikelihood));
-					ulfile << left << setw(10) << ulsnpid <<"\t"<< setw(10) << famkeyA << "\t" <<right << setw(15) << setprecision(6) << ulikelihood << endl;
+					//ulfile << left << setw(10) << ulsnpid <<"\t"<< setw(10) << famkeyA << "\t" <<right << setw(15) << setprecision(6) << ulikelihood << endl;
 				}
 				if (fammap.count(famkeyX)==0)
 				{
 					ulikelihood = cart_product(glpv, Penetrance, "X");
 					fammap.insert(std::make_pair(famkeyX, ulikelihood));
-					ulfile << left << setw(10) << "\t" << ulsnpid << setw(10) << famkeyX << "\t" << right << setw(15) << setprecision(6) << ulikelihood << endl;					
+					//ulfile << left << setw(10) << "\t" << ulsnpid << setw(10) << famkeyX << "\t" << right << setw(15) << setprecision(6) << ulikelihood << endl;					
 				}
 			}
 			else
 			{
 				ulikelihood = cart_product(glpv, Penetrance, "A");
 				fammap.insert(std::make_pair(famkeyA, ulikelihood));
-				ulfile << left << setw(10) << ulsnpid <<"\t" <<  setw(10) << famkeyA <<"\t"<< right << setw(15) << setprecision(6)  << ulikelihood << endl;
+				//ulfile << left << setw(10) << ulsnpid <<"\t" <<  setw(10) << famkeyA <<"\t"<< right << setw(15) << setprecision(6)  << ulikelihood << endl;
 				ulikelihood = cart_product(glpv, Penetrance, "X");
 				fammap.insert(std::make_pair(famkeyX, ulikelihood));
-				ulfile << left << setw(10) << ulsnpid <<"\t"<<  setw(10) << famkeyX << "\t"<<right << setw(15) << setprecision(6)  << ulikelihood << endl; 				
+				//ulfile << left << setw(10) << ulsnpid <<"\t"<<  setw(10) << famkeyX << "\t"<<right << setw(15) << setprecision(6)  << ulikelihood << endl; 				
 			}			
 		}
 		ufm++;
 		UninfLikelihoods.emplace_back(fammap);
 	}
-	ulfile.close();
+	//ulfile.close();
 	cout << "Done!!!" << endl;
 
 

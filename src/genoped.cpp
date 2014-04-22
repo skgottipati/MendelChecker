@@ -225,18 +225,18 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
     //mfglfile << "SUM_GL" << endl;
     //mfglfile.close();
 
-    ofstream popGTfile (filename+"_populationGL.txt", ios::out );
-    popGTfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t";
-    for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
-    {
-            popGTfile << *gt << "\t";
-    }
-    popGTfile <<  "SUM_GL" << endl;
-    popGTfile.close();
-
-    ofstream ulfile (filename+"_uninformativelikelihoods.txt", ios::out );
-    ulfile << "SNPID" << "\t" << "OFFSPRINGS" << "\t"  << "uninfL" << endl;
-    ulfile.close();
+    //ofstream popGTfile (filename+"_populationGL.txt", ios::out );
+    //popGTfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t";
+    //for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
+    //{
+    //        popGTfile << *gt << "\t";
+    //}
+    //popGTfile <<  "SUM_GL" << endl;
+    //popGTfile.close();
+    //
+    //ofstream ulfile (filename+"_uninformativelikelihoods.txt", ios::out );
+    //ulfile << "SNPID" << "\t" << "OFFSPRINGS" << "\t"  << "uninfL" << endl;
+    //ulfile.close();
 
     ofstream plfile (filename+"_pedigreelikelihoods.txt", ios::out);
     plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO"<< "\t" << "CPUtime" << endl;

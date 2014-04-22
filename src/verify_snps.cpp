@@ -1,11 +1,12 @@
 #include "verify_snps.h"
 
+// pedigree file
 
 //class LINE {
 //
 //	public:
-//	std::map<std::string,int> GLs;	
-//	void setelem(string);	
+//	std::map<std::string,int> GLs;
+//	void setelem(string);
 //	string chromosome;
 //	int position;
 //	string snpid;
@@ -13,11 +14,23 @@
 //	string individualid;
 //	string mom;
 //	string dad;
-//	string sex;	
+//	string sex;
 //};
+
+//vector<string> intersection(vector<string> &v1, vector<string> &v2)
+//{
+//    vector<string> intersect_vec;
+//    sort(v1.begin(), v1.end());
+//    sort(v2.begin(), v2.end());
+//    set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(intersect_vec));
+//
+//    return intersect_vec;
+//}
+
 
 void verify_nuclear_family(std::vector<std::string> fam){
     std::map<std::string, std::string> parents;
+    //std::map<std::string, std::string> offspring_parents;
     std::map<std::string, std::map<std::string, std::string>> offsprings;
     vector<string> fields;
     std::map<std::string, std::string> offspring_fields;
@@ -33,7 +46,7 @@ void verify_nuclear_family(std::vector<std::string> fam){
         if (fields.at(0) =="")
             throw "All individuals must belong to a family";
         if (fields.at(2) == "0" && fields.at(3) == "0")
-        {    
+        {
             parents.insert(std::make_pair(fields.at(1), fields.at(4)));
             if (parsex != "" && parsex == fields.at(4))
                 throw "Both parents are of the same sex";
@@ -47,7 +60,7 @@ void verify_nuclear_family(std::vector<std::string> fam){
             if (parsex == "")
                 parsex = fields.at(4);
             if (parind == "")
-                parind = fields.at(1);                
+                parind = fields.at(1);     
         }
         else
         {
@@ -55,6 +68,7 @@ void verify_nuclear_family(std::vector<std::string> fam){
             offspring_fields.insert(make_pair(dad, fields.at(2)));
             offspring_fields.insert(make_pair(sex, fields.at(4)));
             offsprings.insert(make_pair(fields.at(1), offspring_fields));
+            //offspring_parents.emplace_back(std::make_pair(fields.at(1), fields.at(4)));
         }
     }
     //cout << "parents-size: " << parents.size() << "\t offsprings-size: " << offsprings.size() << endl;
@@ -62,9 +76,10 @@ void verify_nuclear_family(std::vector<std::string> fam){
         throw "One or both parents are missing";
     else if (parents.size()>2)
         throw "More than 2 parents exist in this family";
-    
+
     parents.clear();
     offsprings.clear();
+    //offspring_parents();
 }
 
 
@@ -77,7 +92,7 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
     unsigned int pedind = 1;
     //cout << pedigree.size() << endl;
     cout << "Running verification of pedigree file." << endl;
-    
+
     for (auto it=pedigree.begin(); it!=pedigree.end(); it++){
         famidped = split(it->first, ":");
         if (famid == famidped.at(0))
@@ -96,7 +111,7 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
                     cerr << "Error: " << Message << endl;
                     exit(EXIT_FAILURE);
                 }
-            }   
+            }
         }
         else
         {
@@ -145,16 +160,16 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
 //            vector<string > famids;
 //            for (auto ind = (*fam).begin(); ind!=(*fam).end(); ind++)
 //            {
-//                
+//
 //                #####General notes
 //                #pedigree fields are FAM ID FA MO SEX
 //
-//                
+//
 //                #all parents must have a sex
 //                if (ind->mom == "0" && ind->dad =="0")
 //                    if ind->sex == "2"
 //                        throw "All parents must have a sex";
-//                
+//
 //                #all offspring must have exactly two parents
 //                if (ind->mom != "0" && ind->dad != "0")
 //                {
@@ -179,15 +194,15 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
 //
 //                # set problem flag, if this doesn't change from false, the pedigree is legal
 //                # problem = false
-//    
+//
 //                #check for duplicate individuals
 //                #foreach FAMID, if FAMID exists in the list of all FAMIDs more than once THEN problem = true & output line
 //                famids.emplace_back(ind->familyid + ind->individualid);
-//                
-//                
-//                
-//                
-//                
+//
+//
+//
+//
+//
 //                #check for parent violations
 //                #foreach FAMID, if FAMFA is defined AND FAMMO is defined {
 //                #individual is an offspring
@@ -196,12 +211,12 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
 //                        #the FAM of offspring must match the FAM of parent
 //                #checks for FAMFA
 //                    #if FAMFA does not exist as an FAMID THEN problem = true & output line #parent must exist elsewhere in pedigree
-//                    #for FAMID(FAMFA) #the line corresponding to FAMFA, i.e. lookup the line for which the value of FAMFA (collected from the line) is the FAMID (from the list of all individuals) 
+//                    #for FAMID(FAMFA) #the line corresponding to FAMFA, i.e. lookup the line for which the value of FAMFA (collected from the line) is the FAMID (from the list of all individuals)
 //                        #if FAMID(FAMFA) SEX is not male THEN problem = true & output line #sex of parent must match sex of FAMID
 //                        #if FAMID(FAMFA) is defined OR FAMID(FAMMO) is defined THEN problem = true & output line #the parents of any offspring cannot be offspring themselves, i.e. multigenerational families
 //                #checks for MO
 //                    #if MO does not exist as an FAMID THEN problem = true & output line #parent must exist elsewhere in pedigree
-//                    #for FAMID(FAMMO) #the line corresponding to FAMMO, i.e. lookup the line for which the value of FAMMO (collected from the line) is the FAMID (from the list of all individuals) 
+//                    #for FAMID(FAMMO) #the line corresponding to FAMMO, i.e. lookup the line for which the value of FAMMO (collected from the line) is the FAMID (from the list of all individuals)
 //                        #if FAMID(FAMMO) SEX is not female THEN problem = true & output line #sex of parent must match sex of FAMID
 //                        #if FAMID(FAMFA) is defined OR FAMID(FAMMO) is defined THEN problem = true & output line #the parents of any offspring cannot be offspring themselves, i.e. multigenerational families
 //                #} ELSE {
@@ -212,9 +227,9 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
 //            }
 //            if (moms.size() != 1 || dads.size() != 1)
 //                throw "All offsprings do not belong to the same family.";
-//                
+//
 //        }
-//            
+//
 //    }
 //
 //
