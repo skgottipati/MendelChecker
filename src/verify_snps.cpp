@@ -60,10 +60,12 @@ void verify_nuclear_family(std::vector<std::string> fam){
             if (parsex == "")
                 parsex = fields.at(4);
             if (parind == "")
-                parind = fields.at(1);     
+                parind = fields.at(1);
         }
         else
         {
+            if (fields.at(2) == fields.at(3))
+                throw "mother and father have the same id";
             offspring_fields.insert(make_pair(mom, fields.at(3)));
             offspring_fields.insert(make_pair(dad, fields.at(2)));
             offspring_fields.insert(make_pair(sex, fields.at(4)));

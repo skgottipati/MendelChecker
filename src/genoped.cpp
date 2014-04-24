@@ -303,7 +303,7 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
                     }
                     if (GTindex ==-1 || PLindex == -1)
                     {
-                        cout << "Genotypes or genotype likelihood do not exist in the format" << endl;
+                        cout << "Genofield " << genofield << " does not exist for snp " << snpid << " on chromosome " << chrom << endl;
                         continue;
                     }
                     std::unordered_map<std::string, int> GTs = generateGTmap(alleles);

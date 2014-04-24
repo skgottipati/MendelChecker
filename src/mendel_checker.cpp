@@ -112,7 +112,7 @@ int main(int argc, char* argv[]) {
 		cout << "Sex prior should be set to a value between 0 and 1." << endl;
 		exit (EXIT_FAILURE);
 	}
-
+	string GF = (string) options.get("genofield");
 	std::unordered_map<std::string, double> Penetrance = computePenetrance();
 	std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
 	verify_pedigrees(pedigree);
