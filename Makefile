@@ -2,18 +2,18 @@
 CC=g++
 # FLAGS for optimization
 UNAME := $(shell uname)
-CFLAGS=-std=c++0x -O3 -Wall
-ifeq ($UNAME, Linux)
-    CFLAGS=-std=c++0x -O3 -Wall
+CFLAGS=-O3 -Wall
+ifeq ($(UNAME), Linux)
+    CFLAGS+=-std=c++0x
 endif
-ifeq ($UNAME, Darwin)
-    CFLAGS=-std=c++11 -O3 -Wall -Wno-unused-private-field
+ifeq ($(UNAME), Darwin)
+    CFLAGS+=-std=c++0x -Wno-unused-private-field
 endif
 ifneq (,$(findstring MINGW,$(UNAME)))
-    CFLAGS=-std=c++0x -O3 -Wall
+    CFLAGS+=-std=c++0x
 endif
 ifneq (,$(findstring CYGWIN,$(UNAME)))
-    CFLAGS=-std=c++11 -O3 -Wall
+    CFLAGS+=-std=c++0x
 endif
 #-Wno-unused-variable
 #-Wno-unused-private-field
