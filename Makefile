@@ -2,7 +2,7 @@
 CC=g++
 # FLAGS for optimization
 UNAME := $(shell uname)
-CFLAGS=-std=c++11 -O3 -Wall
+CFLAGS=-std=c++0x -O3 -Wall
 ifeq ($UNAME, Linux)
     CFLAGS=-std=c++0x -O3 -Wall
 endif
