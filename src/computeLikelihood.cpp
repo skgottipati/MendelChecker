@@ -383,11 +383,11 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 	string plfamid;
 	string plsnpid;
 	//int snp_count = 0;
-	long int sec;
-	time_t seconds;
-	long double pedlrtA = 0;
-	long double pedlrtX = 0;
-	long double llr= 0;
+	//long int sec;
+	//time_t seconds;
+	//long double pedlrtA = 0;
+	//long double pedlrtX = 0;
+	//long double llr= 0;
 	//long double pval = 0;
 	
 //	ofstream pedlrtfile (filename+"_pedigreeLRTstatistic.txt", ios::out|ios::app );
@@ -408,8 +408,8 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 			int hets = 0;
 			int homs = 0;
 			int unks = 0;
-			sec = clock();
-			seconds = time (NULL);
+			//sec = clock();
+			//seconds = time (NULL);
 			for (auto ind = (*fam).begin(); ind!=(*fam).end(); ind++)
 			{
 				GLPROB glp;
@@ -430,14 +430,14 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 			inflik_A = cart_product(glpv, Penetrance, "A");
 			inflik_X = cart_product(glpv, Penetrance, "X");
 //			plfile << left << setw(10) << plsnpid << setw(10) << plfamid << setw(15) << setprecision(6) << inflik_A << setw(15) << setprecision(6) <<  inflik_X << setw(15) << setprecision(6) << (*vecp)[famkeyA] << setw(15) << setprecision(6) << (*vecp)[famkeyX] << left << setw(15) << setprecision(6) << inflik_A/(*vecp)[famkeyA] << left << setw(15) << setprecision(6) << inflik_X/(*vecp)[famkeyX]<< right << setw(15) << setprecision(10) << ((long int) clock()-sec) << endl; //time(NULL) - seconds << endl;
-			plfile << left << setw(10) << plsnpid << "\t" << setw(10) << "\t" <<  plfamid << "\t" << setw(15) << setprecision(6) << inflik_A << "\t" <<  setw(15) << setprecision(6) <<  inflik_X << "\t" << setw(15) << setprecision(6) << (*vecp)[famkeyA] << "\t" << setw(15) << setprecision(6) << (*vecp)[famkeyX] << "\t" <<left << setw(15) << setprecision(6) << inflik_A/(*vecp)[famkeyA] << "\t" <<left << setw(15) << setprecision(6) << inflik_X/(*vecp)[famkeyX]<< "\t" <<right << setw(15) << setprecision(10) << ((long int) clock()-sec) << "\n"; //time(NULL) - seconds << endl;
-			pedlrtA = log(inflik_A); ///(*vecp)[famkeyA]);
-			pedlrtX = log(inflik_X); ///(*vecp)[famkeyX]);
+			plfile << left << setw(10) << plsnpid << "\t" << setw(10) << "\t" <<  plfamid << "\t" << setw(15) << setprecision(6) << inflik_A << "\t" <<  setw(15) << setprecision(6) <<  inflik_X << "\t" << setw(15) << setprecision(6) << (*vecp)[famkeyA] << "\t" << setw(15) << setprecision(6) << (*vecp)[famkeyX] << "\t" <<left << setw(15) << setprecision(6) << inflik_A/(*vecp)[famkeyA] << "\t" <<left << setw(15) << setprecision(6) << inflik_X/(*vecp)[famkeyX]<< "\n"; //<<right << setw(15) << setprecision(10) <<  //((long int) clock()-sec) << "\n"; //time(NULL) - seconds << endl;
+			//pedlrtA = log(inflik_A); ///(*vecp)[famkeyA]);
+			//pedlrtX = log(inflik_X); ///(*vecp)[famkeyX]);
 			pscoreA += log(inflik_A/(*vecp)[famkeyA]);
 			pscoreX += log(inflik_X/(*vecp)[famkeyX]);
 			pedLAut += log(inflik_A);
 			pedLSex += log(inflik_X);			
-			llr = -2*(pedlrtA-pedlrtX);
+			//llr = -2*(pedlrtA-pedlrtX);
 //			pval = bchisqr(1, llr);
 //			pedlrtfile << setw(15) << setprecision(6) << pedlrtA << setw(15) << setprecision(6) << pedlrtX << setw(15) << setprecision(6) << llr << setw(15) << setprecision(6) << pval;
 //			pedlrtfile << left << setw(10) << plsnpid << "\t" << setw(10) <<  plfamid << "\t" << setw(15) << setprecision(6) << pedlrtA << "\t" << setw(15) << setprecision(6) << pedlrtX << "\t" << setw(15) << setprecision(6) << llr << "\t" << setw(15) << setprecision(6) << pval << "\n";
