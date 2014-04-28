@@ -1,1 +1,0 @@
-SNP	AutoSCORE	SexSCORE	AutoPedL	SexPedL	PP_sex

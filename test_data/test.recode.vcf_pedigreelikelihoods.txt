@@ -1,1 +1,0 @@
-SNPID	FAMID	AutoL	SexL	AutoUninfL	SexUninfL	AutoRATIO	SexRATIO	CPUtime
