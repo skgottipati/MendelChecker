@@ -4,7 +4,7 @@ CC=g++
 UNAME := $(shell uname)
 CFLAGS=-std=c++11 -O3 -Wall
 ifeq ($UNAME, Linux)
-    CFLAGS=-std=c++11 -O3 -Wall
+    CFLAGS=-std=c++0x -O3 -Wall
 endif
 ifeq ($UNAME, Darwin)
     CFLAGS=-std=c++11 -O3 -Wall -Wno-unused-private-field
