@@ -239,7 +239,7 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
     //ulfile.close();
 
     ofstream plfile (filename+"_pedigreelikelihoods.txt", ios::out);
-    plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO"<< "\t" << "CPUtime" << endl;
+    plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO" << endl;
     ofstream plsfile (filename+"_snpScores.txt", ios::out  );
 //	plsfile << "SNPID" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"LRT" << "\t" << "dof" << "\t" << "Pvalue" << endl;
     plsfile << "SNP" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"PP_sex" << endl;

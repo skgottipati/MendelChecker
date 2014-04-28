@@ -51,7 +51,7 @@ string getelem(std::istringstream linestream){
 int main(int argc, char* argv[]) {
 	if (argc < 2) 
 	{
-		cerr << "Usage: input file name is required\n";
+		cerr << "\nA pedigree file and either a vcf file or a genoped file are required.\nEnter './MendelChecker --help' for available options.\nFor more information, please visit http://code.google.com/p/mendelchecker/wiki/Documentation\n\n";
 		exit (EXIT_FAILURE);
 	}
 
@@ -93,18 +93,21 @@ int main(int argc, char* argv[]) {
 	string vcf = (string) options.get("vcf");
 	string pedfilename = (string) options.get("ped");
 	string genofilename = (string) options.get("filename");
-	if (vcf != "")
+
+	if (pedfilename == "")
 	{
-		if (pedfilename == "")
-		{
-			cout << "Pedigree file(.ped) is required." << endl;
-			exit (EXIT_FAILURE);
-		}
+		cout << "Pedigree file(.ped) is required." << endl;
+		exit (EXIT_FAILURE);
 	}
+
 	if (vcf == "" && genofilename == "")
 	{
 		cout << "A vcf file or a genoped file is required." << endl;
 		exit (EXIT_FAILURE);
+	}
+	if (vcf != "" && genofilename != "")	
+	{
+		cout << "Both vcf and genoped files are provided, the default mode is to run MendelChecker on vcf+ped." << endl;
 	}
 	double alp = (double) options.get("sexPrior");
 	if (alp*(1-alp)<=0)
@@ -120,7 +123,7 @@ int main(int argc, char* argv[]) {
 	if (vcf != ""){
 		read_geno((string) options.get("genofield"), (int) options.get("snpsperloop"),(string) options.get("vcf"), &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
-	else if (genofilename != "")
+	else if (vcf == "" && genofilename != "")
 	{
 		fileread(options["filename"], (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
