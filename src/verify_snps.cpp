@@ -144,7 +144,7 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
         famidped.clear();
         pedind = pedind + 1;
     }
-    cout << "Pedigree file passed all filters, however there potentially could be other format problems with input files." << endl;
+    cout << "Pedigree file passed all filters." << endl;
 }
 
 
