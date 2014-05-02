@@ -22,11 +22,11 @@ void fileread(string fname, double alpha, string unfFLAG){
 	//string filename = argv[1];
 //	cout << filename << endl;
 	string filename = getFileName(fname);
-	cout << filename << "\t alpha: " << alpha << endl;
-  	long numlines =  std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');
+//	cout << filename << "\t alpha: " << alpha << endl;
+  	//long numlines =  std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');
 	//int running_size = 0;
 	//std::streamsize step_size = 300;
-	cout << "Number of lines : " << numlines << endl;
+//	cout << "Number of lines : " << numlines << endl;
 	//long size;
 
 	int bufsize = 0;
@@ -38,7 +38,7 @@ void fileread(string fname, double alpha, string unfFLAG){
 	snps.reserve(snpsperloop);
 
 	//auto it = snps.begin();	
-	cout <<  "snps capacity " << snps.capacity() << endl;
+//	cout <<  "snps capacity " << snps.capacity() << endl;
 	//int i = -1;
 	string chrom = "-1";
 	int pos = -1;
@@ -72,7 +72,7 @@ void fileread(string fname, double alpha, string unfFLAG){
 
 //	generating transition probability map
 	
-	cout << "Generating transition probabilities" << endl;
+//	cout << "Generating transition probabilities" << endl;
 
 	std::unordered_map<std::string, double> Penetrance;
 
@@ -196,7 +196,7 @@ void fileread(string fname, double alpha, string unfFLAG){
 	if (file.is_open())
 	{
 		file.seekg (0, ios::beg);
-		cout << "file is open" << endl;
+//		cout << "file is open" << endl;
 		while(1)
 		{
 			string line;
@@ -273,7 +273,7 @@ void fileread(string fname, double alpha, string unfFLAG){
 					}
 					if (snps.size() == (unsigned int) snpsperloop)
 					{
-						cout << "snp count " << snpsperloop << endl;
+//						cout << "snp count " << snpsperloop << endl;
 //						pp.emplace_back(pl);
 //						snps.emplace_back(pp);
 //						founders.emplace_back(q);

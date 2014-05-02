@@ -119,7 +119,7 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
         {
             if (famid != "")
             {
-                cout << "was herer" << endl;
+                //cout << "was herer" << endl;
                 try
                 {
                     //cout << "Running verification of pedigree file." << endl;

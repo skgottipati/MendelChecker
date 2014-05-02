@@ -131,7 +131,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 
 //	population genotype vector from founder genotypes
 
-	cout << "Computing population genotype vector from founders" << endl;
+//	cout << "Computing population genotype vector from founders" << endl;
 
 	std::vector<string> alleles;
 	alleles.reserve(4);
@@ -258,14 +258,14 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 		
 	}
 	//popGTfile.close();
-	cout << "Done!!!" << endl;
+//	cout << "Done!!!" << endl;
 
 
 
 //	computing un-informative likelihoods
 
 
-	cout << "Computing Un-informative likelihoods" << endl;
+//	cout << "Computing Un-informative likelihoods" << endl;
 
 //	ofstream ulfile ("/home/chaitanya/Desktop/nancy/uninformativelikelihoods.txt", ios::out );	
 //	if (func_call == 1)
@@ -345,7 +345,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 		UninfLikelihoods.emplace_back(fammap);
 	}
 	//ulfile.close();
-	cout << "Done!!!" << endl;
+//	cout << "Done!!!" << endl;
 
 
 
@@ -353,7 +353,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 //	computing likelihoods  (33*(4**8)+51*(2**8)+16)
 
 
-	cout << "Computing likelihoods" << endl;
+//	cout << "Computing likelihoods" << endl;
 
 //	ofstream plfile ("/home/chaitanya/Desktop/nancy/pedigreelikelihoods.txt", ios::out);
 //	ofstream plsfile ("/home/chaitanya/Desktop/nancy/snpScores.txt", ios::out  );
@@ -459,6 +459,6 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 	plfile.close();
 	plsfile.close();	
 //	pedlrtfile.close();
-	cout << "Done!!!" << endl;
+//	cout << "Done!!!" << endl;
 
 }

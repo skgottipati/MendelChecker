@@ -22,7 +22,7 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
     std::map<std::string, std::string> pedigree_str;
     if (file.is_open()){
     	file.seekg (0, ios::beg);
-        cout << "Reading pedigree file." << endl;
+//        cout << "Reading pedigree file." << endl;
         string line;
         while(getline(file, line))
         {
@@ -106,7 +106,7 @@ std::unordered_map<std::string, double> computePenetrance(){
     
 //	generating transition probability map
     
-    cout << "Generating transition probabilities." << endl;
+//    cout << "Generating transition probabilities." << endl;
 
     std::unordered_map<std::string, double> Penetrance;
 
@@ -249,7 +249,7 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
         
     if (file.is_open()){
     	file.seekg (0, ios::beg);
-        cout << "Reading VCF file." << endl;
+//        cout << "Reading VCF file." << endl;
         string line;
         while(1){
             if(!getline(file, line)){
@@ -301,7 +301,7 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
                             PLindex = runind;
                         runind = runind + 1;
                     }
-                    if (GTindex ==-1 || PLindex == -1)
+                    if (PLindex == -1)
                     {
                         cout << "Genofield " << genofield << " does not exist for snp " << snpid << " on chromosome " << chrom << endl;
                         continue;

@@ -51,12 +51,12 @@ string getelem(std::istringstream linestream){
 int main(int argc, char* argv[]) {
 	if (argc < 2) 
 	{
-		cerr << "\nA pedigree file and either a vcf file or a genoped file are required.\nEnter './MendelChecker --help' for available options.\nFor more information, please visit http://code.google.com/p/mendelchecker/wiki/Documentation\n\n";
+		cerr << "\nA vcf & pedigree file or a genoped file are required.\nEnter './MendelChecker --help' for available options.\nFor more information, please visit http://code.google.com/p/mendelchecker/wiki/Documentation\n\n";
 		exit (EXIT_FAILURE);
 	}
 
 #ifndef DISABLE_USAGE
-  const string usage = "\nusage: %prog [OPTION]... DIR [FILE]...";
+  const string usage = "\nusage: \nMendelChecker -f genoPedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior] \nMendelChecker -v vcfFile -p pedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior]";
 #else
   const string usage = SUPPRESS_USAGE;
 #endif
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
     "<http://gnu.org/licenses/gpl.html>.\n"
     "This is free software: you are free to change and redistribute it.\n"
     "There is NO WARRANTY, to the extent permitted by law.";
-  const string desc = "MendelChecker: A C++ software for quality control in next generation sequencing using Mendelian inheritance in pedigrees";
+  const string desc = "MendelChecker: A C++ software for quality control in SNP discovery from next generation sequencing data using Mendelian inheritance in pedigrees";
   const string epilog = "For more information, please visit http://code.google.com/p/mendelchecker/wiki/Documentation\n";
 
   OptionParser parser = OptionParser()
@@ -82,8 +82,8 @@ int main(int argc, char* argv[]) {
 	parser.add_option("-e", "--ped") .dest("ped") .type("string") .set_default("") .help("input ped file name with path") .metavar("FILE");
 	parser.add_option("-n", "--snpsperloop") .dest("snpsperloop") .type("int") .set_default(10000) .help("number of snps compute per loop");
 	parser.add_option("-d", "--genofield") .dest("genofield") .type("string") .set_default("PL") .help("VCF genotype field, options: PL, GL, GP (default: %default)");
-	parser.add_option("-p", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("default: %default sexPrior");
-	parser.add_option("-u", "--uniform") .dest("uniformFLAG") .type("string").help("default: %default (population), true (uniform)") .set_default("false") .metavar("STRING");
+	parser.add_option("-p", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("prior probability of sex-linkage(default: %default)");
+	parser.add_option("-u", "--uniform") .dest("uniformFLAG") .type("string").help("use uniform prior instead of expected population genotype frequencies (default: %default") .set_default("false") .metavar("STRING");
 	
 	Values& options = parser.parse_args(argc, argv);
 	vector<string> args = parser.args();
@@ -93,13 +93,14 @@ int main(int argc, char* argv[]) {
 	string vcf = (string) options.get("vcf");
 	string pedfilename = (string) options.get("ped");
 	string genofilename = (string) options.get("filename");
-
-	if (pedfilename == "")
+	if (vcf != "")
 	{
-		cout << "Pedigree file(.ped) is required." << endl;
-		exit (EXIT_FAILURE);
+		if (pedfilename == "")
+		{
+			cout << "Pedigree file(.ped) is required." << endl;
+			exit (EXIT_FAILURE);
+		}
 	}
-
 	if (vcf == "" && genofilename == "")
 	{
 		cout << "A vcf file or a genoped file is required." << endl;
