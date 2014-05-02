@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 	}
 
 #ifndef DISABLE_USAGE
-  const string usage = "\nusage: \nMendelChecker -f genoPedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior] \nMendelChecker -v vcfFile -p pedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior]";
+  const string usage = "\nMendelChecker -f genoPedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior] \nMendelChecker -v vcfFile -p pedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior]";
 #else
   const string usage = SUPPRESS_USAGE;
 #endif
@@ -78,11 +78,11 @@ int main(int argc, char* argv[]) {
 #endif
   ;
 	parser.add_option("-f", "--genoped") .dest("filename") .type("string") .set_default("") .set_default("") .help("input geno-ped file name with path") .metavar("FILE");
-	parser.add_option("-g", "--vcf") .dest("vcf") .type("string") .set_default("") .help("input vcf file name with path") .metavar("FILE");
-	parser.add_option("-e", "--ped") .dest("ped") .type("string") .set_default("") .help("input ped file name with path") .metavar("FILE");
+	parser.add_option("-v", "--vcf") .dest("vcf") .type("string") .set_default("") .help("input vcf file name with path") .metavar("FILE");
+	parser.add_option("-p", "--ped") .dest("ped") .type("string") .set_default("") .help("input ped file name with path") .metavar("FILE");
 	parser.add_option("-n", "--snpsperloop") .dest("snpsperloop") .type("int") .set_default(10000) .help("number of snps compute per loop");
-	parser.add_option("-d", "--genofield") .dest("genofield") .type("string") .set_default("PL") .help("VCF genotype field, options: PL, GL, GP (default: %default)");
-	parser.add_option("-p", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("prior probability of sex-linkage(default: %default)");
+	parser.add_option("-g", "--genoProb") .dest("genofield") .type("string") .set_default("PL") .help("genotype probability format, options: PL, GL, GP (default: %default)");
+	parser.add_option("-a", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("prior probability of sex-linkage(default: %default)");
 	parser.add_option("-u", "--uniform") .dest("uniformFLAG") .type("string").help("use uniform prior instead of expected population genotype frequencies (default: %default") .set_default("false") .metavar("STRING");
 	
 	Values& options = parser.parse_args(argc, argv);
