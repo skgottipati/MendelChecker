@@ -49,6 +49,6 @@ void GLPROB::setelem(LINE& line, map<string, long double>& fm, string likelihood
 //	for (auto pos=this->GLs.begin(); pos!=this->GLs.end(); pos++){
 //		cout << pos->first << ":" << pos->second << "\t";
 //	}
-//	cout << endl;	
+//	cout << endl;
 
 }

@@ -301,7 +301,7 @@ void fileread(string fname, double alpha, string unfFLAG){
 					}
 				}
 				else
-					bufsize += line.size();					
+					bufsize += line.size();
 			}
 
 		}

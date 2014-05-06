@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
     .usage(usage)
     .version(version)
     .description(desc)
-    .epilog(epilog)	
+    .epilog(epilog)
 #ifdef DISABLE_INTERSPERSED_ARGS
     .disable_interspersed_args()
 #endif
@@ -93,6 +93,10 @@ int main(int argc, char* argv[]) {
 	string vcf = (string) options.get("vcf");
 	string pedfilename = (string) options.get("ped");
 	string genofilename = (string) options.get("filename");
+	double alp = (double) options.get("sexPrior");
+	string GF = (string) options.get("genofield");
+	string uniFLAG = (string) options.get("uniformFLAG");
+	cout << "\n" << "Inputs:" << endl;	
 	if (vcf != "")
 	{
 		if (pedfilename == "")
@@ -100,23 +104,30 @@ int main(int argc, char* argv[]) {
 			cout << "Pedigree file(.ped) is required." << endl;
 			exit (EXIT_FAILURE);
 		}
+		cout << "VCF file : " << vcf << endl;
+		cout << "Pedigree file : " << pedfilename << endl;
 	}
 	if (vcf == "" && genofilename == "")
 	{
 		cout << "A vcf file or a genoped file is required." << endl;
 		exit (EXIT_FAILURE);
 	}
-	if (vcf != "" && genofilename != "")	
+	if (vcf != "" && genofilename != "")
 	{
 		cout << "Both vcf and genoped files are provided, the default mode is to run MendelChecker on vcf+ped." << endl;
 	}
-	double alp = (double) options.get("sexPrior");
+	if (vcf == "" && genofilename !="")
+	{
+		cout << "Genoped file : " << genofilename << endl;
+	}
+	cout << "Genotype probability : " << GF << endl;
+	cout << "Sex-prior alpha : " << alp << endl;
+	cout << "Uniform prior : " << uniFLAG << "\n" << endl;
 	if (alp*(1-alp)<=0)
 	{
 		cout << "Sex prior should be set to a value between 0 and 1." << endl;
 		exit (EXIT_FAILURE);
 	}
-	string GF = (string) options.get("genofield");
 	std::unordered_map<std::string, double> Penetrance = computePenetrance();
 	std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
 	verify_pedigrees(pedigree);
@@ -128,7 +139,7 @@ int main(int argc, char* argv[]) {
 	{
 		fileread(options["filename"], (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
-	cout << options["alpha"] << ":" << sizeof(double) << endl;
+	//cout << options["alpha"] << ":" << sizeof(double) << endl;
 	sec = clock() - sec;
 	cout << "Compute time : "  << "\t" << ((long double)sec/CLOCKS_PER_SEC) << " seconds" <<  endl;
 	
