@@ -29,10 +29,10 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
                 if (line.substr(0,1) != "#"){
                     vector<string> fields = split(line, '\t');
                     std::stringstream ss2;
-                    ss2 << fields[3] << "\t" << fields[0] << "\t" << fields[1] << "\t" << fields[2] << "\t" << fields[4];
+                    ss2 << fields[0] << "\t" << fields[1] << "\t" << fields[2] << "\t" << fields[3] << "\t" << fields[4];
                     std::string s2 = ss2.str();
                     std::stringstream ss1;
-                    ss1 << fields[3] << ":" << fields[0];
+                    ss1 << fields[0] << ":" << fields[1];
                     std::string s1 = ss1.str();
                     pedigree_str.insert(std::make_pair(s1, s2));
                     //cout << s1 << "\t" << s2 << endl;
@@ -199,7 +199,10 @@ std::string get_FileName(const std::string strPath)
 
 
 
-void read_geno(string genofield, int numsnps, string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG){
+void read_geno(string genofield, int bufsize, string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG){
+    int pedlength = pedigree->size();
+    int numsnps = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
+    cout << "numsnps:" << numsnps << endl;
     ifstream file (vcfname, ios::in|ios::ate);
     std::unordered_map<std::string, std::string> pedigree_str;
     std::vector<string> genotypes;
@@ -214,7 +217,7 @@ void read_geno(string genofield, int numsnps, string vcfname, const std::map<std
     vector< vector <LINE>> pp;
     vector< LINE> q;
     string famid;
-    
+
     string filename = vcfname;
     //ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out );
     //mfglfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t" ;

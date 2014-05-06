@@ -42,7 +42,7 @@ void verify_nuclear_family(std::vector<std::string> fam){
     //cout << fam.size() << endl;
     for (auto it = fam.begin(); it!= fam.end(); it++){
         fields = split(*it, "\t");
-        //cout << fields.at(1) << endl;
+        //cout << fields.at(1) << "\t" << "a" << fields.at(4) << "a" << endl;
         if (fields.at(0) =="")
             throw "All individuals must belong to a family";
         if (fields.at(2) == "0" && fields.at(3) == "0")
@@ -52,9 +52,13 @@ void verify_nuclear_family(std::vector<std::string> fam){
                 throw "Both parents are of the same sex";
             if (parind != "" && parind == fields.at(1))
                 throw "Both mother and father have the same id";
-            if (fields.at(4) != "1" && fields.at(4) != "2")
+            if (fields.at(4) != "1" && fields.at(4) != "2" && fields.at(4) != "0")
             {
-                //cout << fields.at(4) << endl;
+                cout << "Found sex value of " << fields.at(4) << endl; 
+                throw "Sex of individuals can only take the following values : heterogametic = 2, homogametic = 1, unknown = 0.";
+            }
+            else if (fields.at(4) != "1" && fields.at(4) != "2")
+            {
                 throw "All parents must have sex";
             }
             if (parsex == "")
@@ -66,6 +70,11 @@ void verify_nuclear_family(std::vector<std::string> fam){
         {
             if (fields.at(2) == fields.at(3))
                 throw "mother and father have the same id";
+            if (fields.at(4) != "1" && fields.at(4) != "2" && fields.at(4) != "0")
+            {
+                cout <<  "Found sex value of " << fields.at(4) << endl;                
+                throw "Sex of individuals can only take the following values : heterogametic = 2, homogametic = 1, unknown = 0.";
+            }            
             offspring_fields.insert(make_pair(mom, fields.at(3)));
             offspring_fields.insert(make_pair(dad, fields.at(2)));
             offspring_fields.insert(make_pair(sex, fields.at(4)));

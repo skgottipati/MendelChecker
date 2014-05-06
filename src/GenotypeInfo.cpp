@@ -15,9 +15,9 @@ void LINE::setelem(string line){
 	getline (linestream, w, '\t');
 	individualid = w;
 	getline (linestream, w, '\t');
-	mom = w;
-	getline (linestream, w, '\t');
 	dad = w;
+	getline (linestream, w, '\t');
+	mom = w;
 	getline (linestream, w, '\t');
 	sex = w;
 	int i;

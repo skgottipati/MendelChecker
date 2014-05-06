@@ -15,7 +15,7 @@ std::string getFileName(const std::string strPath)
 
 
 //void fileread3(char* argv[], double alpha){
-void fileread(string fname, double alpha, string unfFLAG){
+void fileread(string fname, int bufsize, double alpha, string unfFLAG){
 
 	ifstream file (fname, ios::in|ios::ate);
 	std::ifstream inFile(fname);
@@ -34,7 +34,9 @@ void fileread(string fname, double alpha, string unfFLAG){
 
 	vector< vector <vector <LINE>>> snps;
 
-	int snpsperloop = 100;
+	int pedlength = pedigree->size();
+	int snpsperloop = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
+	cout << "numsnps:" << snpsperloop << endl;	
 	snps.reserve(snpsperloop);
 
 	//auto it = snps.begin();	
