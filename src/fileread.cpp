@@ -29,12 +29,12 @@ void fileread(string fname, int bufsize, double alpha, string unfFLAG){
 //	cout << "Number of lines : " << numlines << endl;
 	//long size;
 
-	int bufsize = 0;
+	//int bufsize = 0;
 	int snp_count = 0;
 
 	vector< vector <vector <LINE>>> snps;
 
-	int pedlength = pedigree->size();
+	int pedlength = 100;
 	int snpsperloop = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
 	cout << "numsnps:" << snpsperloop << endl;	
 	snps.reserve(snpsperloop);

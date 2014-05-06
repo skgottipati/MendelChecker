@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 	string GF = (string) options.get("genofield");
 	string uniFLAG = (string) options.get("uniformFLAG");
 	string memAlloc = (string) options.get("memoryAlloc");
-	
+	string phreds = (string) options.get("phredScore");
 	std::size_t foundat = memAlloc.find("GB");
 	//cout << foundat << endl;
 	if (foundat == 0)
@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
 	}
 	else if (vcf == "" && genofilename != "")
 	{
-		fileread(options["filename"], (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+		fileread(options["filename"], bufsize, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
 	//cout << options["alpha"] << ":" << sizeof(double) << endl;
 	sec = clock() - sec;

@@ -25,6 +25,6 @@ using namespace std;
 
 std::string getFileName(const std::string strPath);
 
-void fileread(string fname, double alpha, string unfFLAG);
+void fileread(string fname, int bufsize, double alpha, string unfFLAG);
 
 #endif
