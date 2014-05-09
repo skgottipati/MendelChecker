@@ -6,7 +6,7 @@ author: S. Gottipati <skgottipati@gmail.com>
 
 ###Requirements
 
-GCC compiler version >4.7 is required.
+GCC compiler is required. Please note that the program has been tested on versions greater than 4.2.  
 
 ### Compiling
 
