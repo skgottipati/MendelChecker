@@ -28,13 +28,13 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
         {
                 if (line.substr(0,1) != "#"){
                     vector<string> fields = split(line, '\t');
-                    //std::stringstream ss2;
-                    //ss2 << fields[0] << "\t" << fields[1] << "\t" << fields[2] << "\t" << fields[3] << "\t" << fields[4];
-                    //std::string s2 = ss2.str();
+                    std::stringstream ss2;
+                    ss2 << fields[0] << "\t" << fields[1] << "\t" << fields[2] << "\t" << fields[3] << "\t" << fields[4];
+                    std::string s2 = ss2.str();
                     std::stringstream ss1;
                     ss1 << fields[0] << ":" << fields[1];
                     std::string s1 = ss1.str();
-                    pedigree_str.insert(std::make_pair(s1, line));
+                    pedigree_str.insert(std::make_pair(s1, s2));
                     //cout << fields[0] << ":" << fields[1] << "\t" << line << endl;
                 }
         }

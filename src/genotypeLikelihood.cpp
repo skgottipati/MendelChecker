@@ -20,6 +20,21 @@ std::map<std::string,long double> phred2prob(LINE snp, string phredFLAG){
 //		cout << total << ":" << std::pow( base , (long double) -(pos->second)/10 ) << "\t";
 	}
 //	cout << endl;
+
+	try
+	{
+		if (total != 1)
+		{
+			cout << "Sum of genotype probabilities for individual " << snp.individualid << " on chromosome " << snp.chromosome << " at loci " << snp.position << " is " << total << endl;
+			throw "Sum of genotype probabilities does not add to 1.";
+		}		
+	}
+	catch(const char* Message)
+	{
+		cerr << "Error: " << Message << endl;
+		exit (EXIT_FAILURE);
+	}
+
 	for (auto pos=snp.GLs.begin(); pos != snp.GLs.end(); pos++)
 	{
 		if (phredFLAG == "true")
@@ -33,6 +48,7 @@ std::map<std::string,long double> phred2prob(LINE snp, string phredFLAG){
 //		cout << pos->first << ":" << std::pow( base , -((long double) (pos->second))/div )/total << "\t";
 	}
 //	cout << "total:" << total << endl;
+
 	return GL;
 }
 
@@ -52,20 +68,29 @@ void GLPROB::setelem(LINE& line, map<string, long double>& fm, string likelihood
 	// else if (line.sex == 0)
 		// this->xlg = "UNK";
 		
-	//if (phredFLAG == "true")
-	//{
-		if (likelihoodFLAG == "INF")
-			if (((line.GLs.begin()))->second == -1)
-				this->GLs = fm;
-			else		
-				this->GLs = phred2prob(line, phredFLAG);
-		else if (likelihoodFLAG == "UNINF")
+		
+	try
+	{
+		for (auto pos=this->GLs.begin(); pos!=this->GLs.end(); pos++){
+			if (pos->second != -1 && pos->second <0)
+				throw "Genotype probability is less than 1.";
+		}		
+	}
+	catch(const char* Message)
+	{
+		cerr << "Error: " << Message << endl;
+		exit (EXIT_FAILURE);
+	}		
+		
+
+	if (likelihoodFLAG == "INF")
+		if (((line.GLs.begin()))->second == -1)
 			this->GLs = fm;
-	//}
-	//else
-	//{
-	//	cout << "phred flag is false" << endl;
-	//}
+		else		
+			this->GLs = phred2prob(line, phredFLAG);
+	else if (likelihoodFLAG == "UNINF")
+		this->GLs = fm;
+
 //	for (auto pos=this->GLs.begin(); pos!=this->GLs.end(); pos++){
 //		cout << pos->first << ":" << pos->second << "\t";
 //	}

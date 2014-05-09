@@ -28,22 +28,9 @@ void LINE::setelem(string line){
 //	cout << GL.size() << endl;
 	for (i=0; i<10; i++){
 		getline (linestream, w, '\t');
-		cout << genotypes[i] << ":" << atof(w.c_str()) << "\t";
+		cout << genotypes[i] << ":" << atof(w.c_str()) << "|" << w.c_str() << "\t";
 		if (w!="")
 		{
-			//try
-			//{
-			//	if (atof(w.c_str()) < 0)
-			//	{
-			//		cout << w.c_str() << "-" << atoi(w.c_str()) << ":" << atof(w.c_str()) << endl;
-			//		throw "Genotype probability is less than 1.";
-			//	}
-			//}
-			//catch(const char* Message)
-			//{
-			//	cerr << "Error: " << Message << endl;
-			//	exit (EXIT_FAILURE);
-			//}
 			GL.insert(std::make_pair(genotypes[i], atof(w.c_str()) ));
 		}
 		else
