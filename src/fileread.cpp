@@ -15,7 +15,7 @@ std::string getFileName(const std::string strPath)
 
 
 //void fileread3(char* argv[], double alpha){
-void fileread(string fname, int bufsize, double alpha, string unfFLAG){
+void fileread(string fname, int bufsize, string phredFLAG, double alpha, string unfFLAG){
 
 	ifstream file (fname, ios::in|ios::ate);
 	std::ifstream inFile(fname);
@@ -208,7 +208,7 @@ void fileread(string fname, int bufsize, double alpha, string unfFLAG){
 				pp.emplace_back(pl);
 				snps.emplace_back(pp);
 				founders.emplace_back(q);
-				new_compute_likelihood(snps, founders, Penetrance, filename, alpha, unfFLAG);
+				new_compute_likelihood(snps, founders, Penetrance, filename, alpha, unfFLAG, phredFLAG);
 				break;
 			}
 			else
@@ -294,7 +294,7 @@ void fileread(string fname, int bufsize, double alpha, string unfFLAG){
 
 
 						snp_count = 0;
-						new_compute_likelihood(snps, founders, Penetrance, filename, alpha, unfFLAG);
+						new_compute_likelihood(snps, founders, Penetrance, filename, alpha, unfFLAG, phredFLAG);
 						pp.clear();
 						snps.clear();
 						founders.clear();

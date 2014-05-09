@@ -15,13 +15,13 @@
 using namespace std;
 
 
-std::map<std::string,long double> phred2prob(LINE snp);
+std::map<std::string,long double> phred2prob(LINE snp, string phredFLAG);
 
 class GLPROB {
 
 	public:
 	std::map<std::string,long double> GLs;
-	void setelem(LINE&, map<string, long double>&, string);
+	void setelem(LINE&, map<string, long double>&, string, string);
 	string chromosome;
 	int position;
 	string snpid;

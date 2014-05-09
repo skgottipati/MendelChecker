@@ -15,7 +15,7 @@ using namespace std;
 class LINE {
 
 	public:
-	std::map<std::string,int> GLs;	
+	std::map<std::string, long double> GLs;	
 	void setelem(string);
 	string chromosome;
 	int position;

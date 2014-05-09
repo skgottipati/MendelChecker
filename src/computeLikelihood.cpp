@@ -18,7 +18,7 @@ void founders_mean_GLs::set_GLs(std::map<std::string,long double> GL){
 }
 
 
-void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector< LINE>> founders, unordered_map<std::string, double> Penetrance, string filename, double alpha, string unfFLAG){
+void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector< LINE>> founders, unordered_map<std::string, double> Penetrance, string filename, double alpha, string unfFLAG, string phredFLAG){
 
 	static int func_call = 0;
 	func_call++;
@@ -187,7 +187,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 			if (cpos->second == -1) continue;
 			else
 			{
-				pGL = phred2prob(temp_popfounder);
+				pGL = phred2prob(temp_popfounder, phredFLAG);
 				allelePr["A"] += 2*pGL["AA"] + pGL["AC"] + pGL["AG"] + pGL["AT"];
 				allelePr["C"] += 2*pGL["CC"] + pGL["AC"] + pGL["CG"] + pGL["CT"];				
 				allelePr["G"] += 2*pGL["GG"] + pGL["AG"] + pGL["CG"] + pGL["GT"];
@@ -299,7 +299,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 			for (auto ind = (*fam).begin(); ind!=(*fam).end(); ind++)
 			{
 				GLPROB glp;
-				glp.setelem(*ind, ufm->GLs, "UNINF");
+				glp.setelem(*ind, ufm->GLs, "UNINF", phredFLAG);
 				glpv.emplace_back(glp);
 				famsize++;
 				ulsnpid = ind->snpid;
@@ -339,7 +339,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 				ulikelihood = cart_product(glpv, Penetrance, "X");
 				fammap.insert(std::make_pair(famkeyX, ulikelihood));
 				//ulfile << left << setw(10) << ulsnpid <<"\t"<<  setw(10) << famkeyX << "\t"<<right << setw(15) << setprecision(6)  << ulikelihood << endl; 				
-			}			
+			}
 		}
 		ufm++;
 		UninfLikelihoods.emplace_back(fammap);
@@ -413,7 +413,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 			for (auto ind = (*fam).begin(); ind!=(*fam).end(); ind++)
 			{
 				GLPROB glp;
-				glp.setelem(*ind, fm->GLs, "INF");
+				glp.setelem(*ind, fm->GLs, "INF", phredFLAG);
 				glpv.emplace_back(glp);
 				famsize++;
 				plfamid = ind->familyid;

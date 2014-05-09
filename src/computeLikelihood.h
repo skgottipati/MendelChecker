@@ -33,6 +33,6 @@ class founders_mean_GLs{
 };
 
 
-void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector< LINE>> founders, unordered_map<std::string, double> Penetrance, string filename, double alpha, string unfFLAG);
+void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector< LINE>> founders, unordered_map<std::string, double> Penetrance, string filename, double alpha, string unfFLAG, string phredFLAG);
 
 #endif

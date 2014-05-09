@@ -24,19 +24,34 @@ void LINE::setelem(string line){
 	std::vector<string> genotypes;
 	genotypes.reserve(10);
 	genotypes.insert(genotypes.end(),  {"AA", "AC", "AG", "AT", "CC", "CG", "CT", "GG", "GT", "TT"});
-	std::map<string,int> GL;
+	std::map<string, long double> GL;
 //	cout << GL.size() << endl;
 	for (i=0; i<10; i++){
 		getline (linestream, w, '\t');
-//		cout << genotypes[i] << ":" << atof(w.c_str()) << "\t";
+		cout << genotypes[i] << ":" << atof(w.c_str()) << "\t";
 		if (w!="")
-			GL.insert(std::make_pair(genotypes[i], atoi(w.c_str()) ));
+		{
+			//try
+			//{
+			//	if (atof(w.c_str()) < 0)
+			//	{
+			//		cout << w.c_str() << "-" << atoi(w.c_str()) << ":" << atof(w.c_str()) << endl;
+			//		throw "Genotype probability is less than 1.";
+			//	}
+			//}
+			//catch(const char* Message)
+			//{
+			//	cerr << "Error: " << Message << endl;
+			//	exit (EXIT_FAILURE);
+			//}
+			GL.insert(std::make_pair(genotypes[i], atof(w.c_str()) ));
+		}
 		else
 			continue;
 //			GL.insert(std::make_pair(genotypes[i], 0 ));
 //		GL[genotypes[i]]= atoi(w.c_str());
 	}
-//	cout << endl;
+	cout << endl;
 //	for (auto pos=GL.begin(); pos!=GL.end(); pos++){
 //		cout << pos->first << ":" << pos->second << "\t";
 //	}

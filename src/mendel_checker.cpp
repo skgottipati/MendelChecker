@@ -99,6 +99,7 @@ int main(int argc, char* argv[]) {
 	string uniFLAG = (string) options.get("uniformFLAG");
 	string memAlloc = (string) options.get("memoryAlloc");
 	string phreds = (string) options.get("phredScore");
+	
 	std::size_t foundat = memAlloc.find("GB");
 	//cout << foundat << endl;
 	if (foundat == 0)
@@ -141,7 +142,8 @@ int main(int argc, char* argv[]) {
 	cout << "Genotype probability : " << GF << endl;
 	cout << "Sex-prior alpha : " << alp << endl;
 	cout << "Uniform prior : " << uniFLAG << endl;
-	cout << "Memory allocated for buffer : " << memAlloc << "\n" << endl;
+	cout << "Memory allocated for buffer : " << memAlloc << endl;
+	cout << "Phred score based genotype quality : " << phreds << "\n" << endl;
 	if (alp*(1-alp)<=0)
 	{
 		cout << "Sex prior should be set to a value between 0 and 1." << endl;
@@ -152,13 +154,15 @@ int main(int argc, char* argv[]) {
 	verify_pedigrees(pedigree);
 	
 	if (vcf != ""){
-		read_geno((string) options.get("genofield"), bufsize, (string) options.get("vcf"), &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+		//cout << "vcf" << endl;
+		read_geno((string) options.get("genofield"), bufsize, phreds, (string) options.get("vcf"), &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
 	else if (vcf == "" && genofilename != "")
 	{
-		fileread(options["filename"], bufsize, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+		//cout << "geno" << endl;
+		fileread(options["filename"], bufsize, phreds, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
-	//cout << options["alpha"] << ":" << sizeof(double) << endl;
+	cout << options["alpha"] << ":" << sizeof(double) << endl;
 	sec = clock() - sec;
 	cout << "Compute time : "  << "\t" << ((long double)sec/CLOCKS_PER_SEC) << " seconds" <<  endl;
 	

@@ -22,20 +22,20 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
     std::map<std::string, std::string> pedigree_str;
     if (file.is_open()){
     	file.seekg (0, ios::beg);
-//        cout << "Reading pedigree file." << endl;
+        cout << "Reading pedigree file." << endl;
         string line;
         while(getline(file, line))
         {
                 if (line.substr(0,1) != "#"){
                     vector<string> fields = split(line, '\t');
-                    std::stringstream ss2;
-                    ss2 << fields[0] << "\t" << fields[1] << "\t" << fields[2] << "\t" << fields[3] << "\t" << fields[4];
-                    std::string s2 = ss2.str();
+                    //std::stringstream ss2;
+                    //ss2 << fields[0] << "\t" << fields[1] << "\t" << fields[2] << "\t" << fields[3] << "\t" << fields[4];
+                    //std::string s2 = ss2.str();
                     std::stringstream ss1;
                     ss1 << fields[0] << ":" << fields[1];
                     std::string s1 = ss1.str();
-                    pedigree_str.insert(std::make_pair(s1, s2));
-                    //cout << s1 << "\t" << s2 << endl;
+                    pedigree_str.insert(std::make_pair(s1, line));
+                    //cout << fields[0] << ":" << fields[1] << "\t" << line << endl;
                 }
         }
         file.close();
@@ -199,7 +199,7 @@ std::string get_FileName(const std::string strPath)
 
 
 
-void read_geno(string genofield, int bufsize, string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG){
+void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG){
     int pedlength = pedigree->size();
     int numsnps = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
     cout << "numsnps:" << numsnps << endl;
@@ -260,7 +260,7 @@ void read_geno(string genofield, int bufsize, string vcfname, const std::map<std
                 //pp.emplace_back(pl);
                 //snps.emplace_back(pp);
                 //founders.emplace_back(q);
-                new_compute_likelihood(snps, founders, Penetrance, vcfname, alpha, unfFLAG);
+                new_compute_likelihood(snps, founders, Penetrance, vcfname, alpha, unfFLAG, phredFLAG);
                 break;                
             }
             else {
@@ -390,7 +390,7 @@ void read_geno(string genofield, int bufsize, string vcfname, const std::map<std
                     //cout << snpcount << "\t" << numsnps << "\t" << PLindex << endl;
                     if (snpcount == numsnps){
                         //cout << "was here" << endl;
-                        new_compute_likelihood(snps, founders, Penetrance, vcfname, alpha, unfFLAG);
+                        new_compute_likelihood(snps, founders, Penetrance, vcfname, alpha, unfFLAG, phredFLAG);
                         pp.clear();
                         snps.clear();
                         founders.clear();
