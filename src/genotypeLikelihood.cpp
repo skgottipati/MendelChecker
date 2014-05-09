@@ -21,19 +21,19 @@ std::map<std::string,long double> phred2prob(LINE snp, string phredFLAG){
 	}
 //	cout << endl;
 
-	try
-	{
-		if (total != 1)
-		{
-			cout << "Sum of genotype probabilities for individual " << snp.individualid << " on chromosome " << snp.chromosome << " at loci " << snp.position << " is " << total << endl;
-			throw "Sum of genotype probabilities does not add to 1.";
-		}		
-	}
-	catch(const char* Message)
-	{
-		cerr << "Error: " << Message << endl;
-		exit (EXIT_FAILURE);
-	}
+	//try
+	//{
+	//	if (total != 1)
+	//	{
+	//		cout << "Sum of genotype probabilities for individual " << snp.individualid << " on chromosome " << snp.chromosome << " at loci " << snp.position << " is " << total << endl;
+	//		throw "Sum of genotype probabilities does not add to 1.";
+	//	}		
+	//}
+	//catch(const char* Message)
+	//{
+	//	cerr << "Error: " << Message << endl;
+	//	exit (EXIT_FAILURE);
+	//}
 
 	for (auto pos=snp.GLs.begin(); pos != snp.GLs.end(); pos++)
 	{

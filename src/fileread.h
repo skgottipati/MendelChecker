@@ -1,6 +1,8 @@
 #ifndef FR_H
 #define FR_H
 
+#include "split.h"
+#include "genoped.h"
 #include "GenotypeInfo.h"
 #include "genotypeLikelihood.h"
 #include "cart.h"

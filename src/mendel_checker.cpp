@@ -162,7 +162,7 @@ int main(int argc, char* argv[]) {
 		//cout << "geno" << endl;
 		fileread(options["filename"], bufsize, phreds, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
-	cout << options["alpha"] << ":" << sizeof(double) << endl;
+
 	sec = clock() - sec;
 	cout << "Compute time : "  << "\t" << ((long double)sec/CLOCKS_PER_SEC) << " seconds" <<  endl;
 	

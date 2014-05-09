@@ -195,6 +195,9 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 //
 //
 //
+	std::map<std::string, std::string> first_pedigree;
+	std::map<std::string, std::string> iter_pedigree;
+	int firstpedflag = 0;
 	if (file.is_open())
 	{
 		file.seekg (0, ios::beg);
@@ -204,7 +207,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 			string line;
 			if (!getline(file, line))
 			{
-				cout << line << "break" << endl; 						
+				cout << line << "break" << endl;
 				pp.emplace_back(pl);
 				snps.emplace_back(pp);
 				founders.emplace_back(q);
@@ -218,11 +221,24 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 				LINE l;
 				l.setelem(line);
 				if (line.substr(0,1) != "#")
-				{					
+				{
+					vector<string> fields = split(line, '\t');
+					stringstream ss1,ss2;
+					ss1 << fields[3] << "\t" << fields[4];
+					ss2 << fields[3] << "\t" << fields[4] << "\t" << fields[5] << "\t" << fields[6] << "\t" << fields[7];
+					
+					if (firstpedflag == 0)
+					{
+						cout << "first" << endl;
+						first_pedigree.insert(std::make_pair(ss1.str(), ss2.str()));
+					}
+					else
+					{
+						iter_pedigree.insert(std::make_pair(ss1.str(), ss2.str()));
+					}
 					if (l.chromosome == chrom && l.position == pos)
 					{
 	//					cout << "snps capacity "<< snps.size() << " " << line << endl;
-
 						if (l.familyid == famid)
 						{					
 							pl.emplace_back(l);
@@ -291,8 +307,6 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 //							}
 //							cout <<  endl;
 //						}
-
-
 						snp_count = 0;
 						new_compute_likelihood(snps, founders, Penetrance, filename, alpha, unfFLAG, phredFLAG);
 						pp.clear();
@@ -300,15 +314,19 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 						founders.clear();
 		//				pl.clear();
 		//				q.clear();
+		
+						//if (firstpedflag == 0)
+						//	verify_pedigrees(first_pedigree);
+						//else
+						//	
+						firstpedflag +=1;
+						iter_pedigree.clear();
 					}
 				}
 				else
 					bufsize += line.size();
 			}
-
 		}
-
-
 			
 		file.close();
 	

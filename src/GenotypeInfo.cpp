@@ -28,7 +28,7 @@ void LINE::setelem(string line){
 //	cout << GL.size() << endl;
 	for (i=0; i<10; i++){
 		getline (linestream, w, '\t');
-		cout << genotypes[i] << ":" << atof(w.c_str()) << "|" << w.c_str() << "\t";
+		//cout << genotypes[i] << ":" << atof(w.c_str()) << "|" << w.c_str() << "\t";
 		if (w!="")
 		{
 			GL.insert(std::make_pair(genotypes[i], atof(w.c_str()) ));
@@ -38,7 +38,7 @@ void LINE::setelem(string line){
 //			GL.insert(std::make_pair(genotypes[i], 0 ));
 //		GL[genotypes[i]]= atoi(w.c_str());
 	}
-	cout << endl;
+	//cout << endl;
 //	for (auto pos=GL.begin(); pos!=GL.end(); pos++){
 //		cout << pos->first << ":" << pos->second << "\t";
 //	}
