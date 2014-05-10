@@ -102,7 +102,7 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
     vector<string> famidped;
     unsigned int pedind = 1;
     //cout << pedigree.size() << endl;
-    cout << "Running verification of pedigree file." << endl;
+    //cout << "Running verification of pedigree file." << endl;
 
     for (auto it=pedigree.begin(); it!=pedigree.end(); it++){
         famidped = split(it->first, ":");
@@ -153,7 +153,7 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
         famidped.clear();
         pedind = pedind + 1;
     }
-    cout << "Pedigree file passed all filters." << endl;
+    //cout << "Pedigree file passed all filters." << endl;
 }
 
 

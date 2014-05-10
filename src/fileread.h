@@ -8,7 +8,7 @@
 #include "cart.h"
 
 #include "computeLikelihood.h"
-
+#include "verify_snps.h"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>

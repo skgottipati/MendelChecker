@@ -1,5 +1,4 @@
 #include "fileread.h"
-
 #include "computeLikelihood.h"
 
 
@@ -12,6 +11,11 @@ std::string getFileName(const std::string strPath)
 	return strPath.substr(0, strPath.find_last_of("."));
 }
 
+
+bool map_compare (std::map<std::string, std::string> const &lhs, std::map<std::string, std::string> const &rhs) {
+    // No predicate needed because there is operator== for pairs already.
+	return (lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin()));
+}
 
 
 //void fileread3(char* argv[], double alpha){
@@ -36,8 +40,8 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 
 	int pedlength = 100;
 	int snpsperloop = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
-	cout << "numsnps:" << snpsperloop << endl;	
-	snps.reserve(snpsperloop);
+	//cout << "numsnps:" << snpsperloop << endl;	
+	//snps.reserve(snpsperloop);
 
 	//auto it = snps.begin();	
 //	cout <<  "snps capacity " << snps.capacity() << endl;
@@ -207,7 +211,28 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 			string line;
 			if (!getline(file, line))
 			{
-				cout << line << "break" << endl;
+				if (firstpedflag != 0)
+				{
+					try
+					{
+						if (!map_compare(first_pedigree, iter_pedigree))
+						{
+							throw "Pedigrees across SNP's do not match.";
+						}
+					}
+					catch(const char* Message)
+					{
+						cerr << "Error: " << Message << endl;
+						exit (EXIT_FAILURE);
+					}							
+				}
+				else
+				{
+					verify_pedigrees(first_pedigree);
+				}
+				firstpedflag +=1;
+				iter_pedigree.clear();					
+				//cout << line << "break" << endl;
 				pp.emplace_back(pl);
 				snps.emplace_back(pp);
 				founders.emplace_back(q);
@@ -227,17 +252,19 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 					ss1 << fields[3] << "\t" << fields[4];
 					ss2 << fields[3] << "\t" << fields[4] << "\t" << fields[5] << "\t" << fields[6] << "\t" << fields[7];
 					
-					if (firstpedflag == 0)
-					{
-						cout << "first" << endl;
-						first_pedigree.insert(std::make_pair(ss1.str(), ss2.str()));
-					}
-					else
-					{
-						iter_pedigree.insert(std::make_pair(ss1.str(), ss2.str()));
-					}
+
 					if (l.chromosome == chrom && l.position == pos)
 					{
+						if (firstpedflag != 0)
+						{
+							//cout << "first" << endl;
+							iter_pedigree.insert(std::make_pair(ss1.str(), ss2.str()));
+						}
+						else
+						{
+							first_pedigree.insert(std::make_pair(ss1.str(), ss2.str()));
+						}
+						
 	//					cout << "snps capacity "<< snps.size() << " " << line << endl;
 						if (l.familyid == famid)
 						{					
@@ -268,6 +295,28 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 							pp.clear();
 							founders.emplace_back(q);
 							q.clear();
+							
+							if (firstpedflag != 0)
+							{
+								try
+								{
+									if (!map_compare(first_pedigree, iter_pedigree))
+									{
+										throw "Pedigrees across SNP's do not match.";
+									}
+								}
+								catch(const char* Message)
+								{
+									cerr << "Error: " << Message << endl;
+									exit (EXIT_FAILURE);
+								}							
+							}
+							else
+							{
+								verify_pedigrees(first_pedigree);
+							}
+							firstpedflag +=1;
+							iter_pedigree.clear();					
 
 						}
 //						cout << "snps capacity "<< snps.size() << " " << line << endl;
@@ -285,7 +334,16 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 						chrom = l.chromosome;
 						pos = l.position;
 
-
+						if (firstpedflag != 0)
+						{
+							//cout << "first" << endl;
+							iter_pedigree.insert(std::make_pair(ss1.str(), ss2.str()));
+						}
+						else
+						{
+							first_pedigree.insert(std::make_pair(ss1.str(), ss2.str()));
+						}
+						
 						bufsize = 0;
 						bufsize += line.size();
 					}
@@ -314,23 +372,13 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 						founders.clear();
 		//				pl.clear();
 		//				q.clear();
-		
-						//if (firstpedflag == 0)
-						//	verify_pedigrees(first_pedigree);
-						//else
-						//	
-						firstpedflag +=1;
-						iter_pedigree.clear();
 					}
 				}
 				else
 					bufsize += line.size();
 			}
 		}
-			
 		file.close();
-	
-
 	}
 	else
 	{

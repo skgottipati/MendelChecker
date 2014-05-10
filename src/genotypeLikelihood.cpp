@@ -5,6 +5,7 @@ std::map<std::string,long double> phred2prob(LINE snp, string phredFLAG){
 	long double total = 0.0;
 	long double base = 10.0;
 	long double div = 10.0;
+	long double eps = 0.0001;
 	std::map<std::string, long double> GL;
 
 	for (auto pos=snp.GLs.begin(); pos != snp.GLs.end(); pos++)
@@ -21,25 +22,30 @@ std::map<std::string,long double> phred2prob(LINE snp, string phredFLAG){
 	}
 //	cout << endl;
 
-	//try
-	//{
-	//	if (total != 1)
-	//	{
-	//		cout << "Sum of genotype probabilities for individual " << snp.individualid << " on chromosome " << snp.chromosome << " at loci " << snp.position << " is " << total << endl;
-	//		throw "Sum of genotype probabilities does not add to 1.";
-	//	}		
-	//}
-	//catch(const char* Message)
-	//{
-	//	cerr << "Error: " << Message << endl;
-	//	exit (EXIT_FAILURE);
-	//}
 
+	if (phredFLAG == "false")
+	{
+		try
+		{
+			if (total > 1+eps || total < 1-eps)
+			{
+				cout << "Sum of genotype probabilities for individual " << snp.individualid << " on chromosome " << snp.chromosome << " at loci " << snp.position << " is " << total << endl;
+				throw "Sum of genotype probabilities does not add to 1.";
+			}		
+		}
+		catch(const char* Message)
+		{
+			cerr << "Error: " << Message << endl;
+			exit (EXIT_FAILURE);
+		}
+	}
+	
+	
 	for (auto pos=snp.GLs.begin(); pos != snp.GLs.end(); pos++)
 	{
 		if (phredFLAG == "true")
 		{
-			GL.insert(std::make_pair(pos->first, std::pow( base , -((long double) (pos->second))/div )/total));
+			GL.insert(std::make_pair(pos->first, std::pow( base , ((long double) -(pos->second))/div )/total));
 		}
 		else
 		{
