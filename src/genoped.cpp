@@ -199,7 +199,7 @@ std::string get_FileName(const std::string strPath)
 
 
 
-void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG){
+void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG, string outfilename){
     int pedlength = pedigree->size();
     int numsnps = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
     //cout << "numsnps:" << numsnps << endl;
@@ -218,7 +218,7 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
     vector< LINE> q;
     string famid;
 
-    string filename = get_FileName(vcfname);
+    string filename = vcfname;
     //ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out );
     //mfglfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t" ;
     //for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
@@ -241,9 +241,9 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
     //ulfile << "SNPID" << "\t" << "OFFSPRINGS" << "\t"  << "uninfL" << endl;
     //ulfile.close();
 
-    ofstream plfile (filename+".pedigreelikelihoods", ios::out);
+    ofstream plfile (outfilename+".pedigreelikelihoods", ios::out);
     plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO" << endl;
-    ofstream plsfile (filename+".snpScores", ios::out  );
+    ofstream plsfile (outfilename+".snpScores", ios::out  );
 //	plsfile << "SNPID" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"LRT" << "\t" << "dof" << "\t" << "Pvalue" << endl;
     plsfile << "SNP" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"PP_sex" << endl;
     plfile.close();
@@ -260,7 +260,7 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
                 //pp.emplace_back(pl);
                 //snps.emplace_back(pp);
                 //founders.emplace_back(q);
-                new_compute_likelihood(snps, founders, Penetrance, vcfname, alpha, unfFLAG, phredFLAG);
+                new_compute_likelihood(snps, founders, Penetrance, outfilename, alpha, unfFLAG, phredFLAG);
                 break;                
             }
             else {
@@ -391,7 +391,7 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
                     //cout << snpcount << "\t" << numsnps << "\t" << PLindex << endl;
                     if (snpcount == numsnps){
                         //cout << "was here" << endl;
-                        new_compute_likelihood(snps, founders, Penetrance, vcfname, alpha, unfFLAG, phredFLAG);
+                        new_compute_likelihood(snps, founders, Penetrance, outfilename, alpha, unfFLAG, phredFLAG);
                         pp.clear();
                         snps.clear();
                         founders.clear();

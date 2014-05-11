@@ -19,13 +19,13 @@ bool map_compare (std::map<std::string, std::string> const &lhs, std::map<std::s
 
 
 //void fileread3(char* argv[], double alpha){
-void fileread(string fname, int bufsize, string phredFLAG, double alpha, string unfFLAG){
+void fileread(string fname, int bufsize, string phredFLAG, double alpha, string unfFLAG, string outfilename){
 
 	ifstream file (fname, ios::in|ios::ate);
 	std::ifstream inFile(fname);
 	//string filename = argv[1];
 //	cout << filename << endl;
-	string filename = getFileName(fname);
+	string filename = fname;
 //	cout << filename << "\t alpha: " << alpha << endl;
   	//long numlines =  std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n');
 	//int running_size = 0;
@@ -185,9 +185,9 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 	//ulfile << "SNPID" << "\t" << "OFFSPRINGS" << "\t"  << "uninfL" << endl;
 	//ulfile.close();
 
-	ofstream plfile (filename+".pedigreelikelihoods", ios::out);
+	ofstream plfile (outfilename+".pedigreelikelihoods", ios::out);
 	plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO" << endl;
-	ofstream plsfile (filename+".snpScores", ios::out  );
+	ofstream plsfile (outfilename+".snpScores", ios::out  );
 //	plsfile << "SNPID" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"LRT" << "\t" << "dof" << "\t" << "Pvalue" << endl;
 	plsfile << "SNP" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"PP_sex" << endl;
 	plfile.close();
@@ -240,7 +240,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 				pp.emplace_back(pl);
 				snps.emplace_back(pp);
 				founders.emplace_back(q);
-				new_compute_likelihood(snps, founders, Penetrance, filename, alpha, unfFLAG, phredFLAG);
+				new_compute_likelihood(snps, founders, Penetrance, outfilename, alpha, unfFLAG, phredFLAG);
 				break;
 			}
 			else
@@ -378,7 +378,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 //							cout <<  endl;
 //						}
 						snp_count = 0;
-						new_compute_likelihood(snps, founders, Penetrance, filename, alpha, unfFLAG, phredFLAG);
+						new_compute_likelihood(snps, founders, Penetrance, outfilename, alpha, unfFLAG, phredFLAG);
 						pp.clear();
 						snps.clear();
 						founders.clear();

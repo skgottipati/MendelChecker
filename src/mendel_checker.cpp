@@ -77,9 +77,10 @@ int main(int argc, char* argv[]) {
     .disable_interspersed_args()
 #endif
   ;
-	parser.add_option("-f", "--genoped") .dest("filename") .type("string") .set_default("") .set_default("") .help("input geno-ped file name with path") .metavar("FILE");
-	parser.add_option("-v", "--vcf") .dest("vcf") .type("string") .set_default("") .help("input vcf file name with path") .metavar("FILE");
-	parser.add_option("-p", "--ped") .dest("ped") .type("string") .set_default("") .help("input ped file name with path") .metavar("FILE");
+	parser.add_option("-f", "--genoped") .dest("filename") .type("string") .set_default("") .set_default("") .help("input geno-ped file name with full path") .metavar("FILE");
+	parser.add_option("-v", "--vcf") .dest("vcf") .type("string") .set_default("") .help("input vcf file name with full path") .metavar("FILE");
+	parser.add_option("-p", "--ped") .dest("ped") .type("string") .set_default("") .help("input ped file name with full path") .metavar("FILE");
+	parser.add_option("-o", "--out") .dest("outdir") .type("string") .set_default("") .help("output file name with full path") .metavar("FILE");
 	parser.add_option("-m", "--memoryAlloc") .dest("memoryAlloc") .type("string") .set_default("1GB") .help("Set the size of memory(in GB) allocated to the buffer");
 	parser.add_option("-g", "--genoProb") .dest("genofield") .type("string") .set_default("PL") .help("genotype probability format, options: PL, GL, GP (default: %default)");
 	parser.add_option("-s", "--phredScore") .dest("phredScore") .type("string") .set_default("true") .help("Genotype quality as phred score (default: %default)");
@@ -94,6 +95,7 @@ int main(int argc, char* argv[]) {
 	string vcf = (string) options.get("vcf");
 	string pedfilename = (string) options.get("ped");
 	string genofilename = (string) options.get("filename");
+	string outfname = (string) options.get("outdir");
 	double alp = (double) options.get("sexPrior");
 	string GF = (string) options.get("genofield");
 	string uniFLAG = (string) options.get("uniformFLAG");
@@ -139,6 +141,7 @@ int main(int argc, char* argv[]) {
 	{
 		cout << "Genoped file : " << genofilename << endl;
 	}
+	//cout << "Output file name prefix : " << outfname << endl;
 	cout << "Genotype probability : " << GF << endl;
 	cout << "Sex-prior alpha : " << alp << endl;
 	cout << "Uniform prior : " << uniFLAG << endl;
@@ -146,7 +149,9 @@ int main(int argc, char* argv[]) {
 	cout << "Phred score based genotype quality : " << phreds << "\n" << endl;
 	cout << "Outputs:" << endl;
 	string fname = "";
-	if (vcf !="")
+	if (outfname != "")
+		fname = outfname;
+	else if (vcf !="")
 		fname = vcf;
 	else if (vcf=="" && genofilename !="" )
 		fname = genofilename;
@@ -165,12 +170,12 @@ int main(int argc, char* argv[]) {
 		//cout << "vcf" << endl;
 		std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
 		verify_pedigrees(pedigree);		
-		read_geno((string) options.get("genofield"), bufsize, phreds, (string) options.get("vcf"), &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+		read_geno((string) options.get("genofield"), bufsize, phreds, vcf, &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"), fname);
 	}
 	else if (vcf == "" && genofilename != "")
 	{
 		//cout << "geno" << endl;
-		fileread(options["filename"], bufsize, phreds, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+		fileread(genofilename, bufsize, phreds, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"), fname);
 		//cout << "end" << endl;
 	}
 

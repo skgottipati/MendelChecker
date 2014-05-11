@@ -29,7 +29,7 @@ std::unordered_map<std::string, double> computePenetrance();
 
 std::string get_FileName(const std::string strPath);
 
-void read_geno(string genofield, int bufsize, std::string phredFLAG, std::string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG);
+void read_geno(string genofield, int bufsize, std::string phredFLAG, std::string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG, string outfname);
 
 //void parse(string& line, bool parseSamples);
 
