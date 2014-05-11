@@ -6,7 +6,7 @@ std::string getFileName(const std::string strPath)
 {
 	//size_t iLastSeparator = 0;
 //	cout << strPath.substr(iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0 << endl;
-	cout << strPath.size()  << "\t" << strPath.find_last_of(".") << endl;
+//	cout << strPath.size()  << "\t" << strPath.find_last_of(".") << endl;
 //	return strPath.substr((iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0, strPath.size() - strPath.find_last_of("."));
 	return strPath.substr(0, strPath.find_last_of("."));
 }
@@ -38,8 +38,8 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 
 	vector< vector <vector <LINE>>> snps;
 
-	int pedlength = 100;
-	int snpsperloop = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
+	int pedlength;
+	int snpsperloop;
 	//cout << "numsnps:" << snpsperloop << endl;	
 	//snps.reserve(snpsperloop);
 
@@ -185,9 +185,9 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 	//ulfile << "SNPID" << "\t" << "OFFSPRINGS" << "\t"  << "uninfL" << endl;
 	//ulfile.close();
 
-	ofstream plfile (filename+"_pedigreelikelihoods.txt", ios::out);
+	ofstream plfile (filename+".pedigreelikelihoods", ios::out);
 	plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO" << endl;
-	ofstream plsfile (filename+"_snpScores.txt", ios::out  );
+	ofstream plsfile (filename+".snpScores", ios::out  );
 //	plsfile << "SNPID" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"LRT" << "\t" << "dof" << "\t" << "Pvalue" << endl;
 	plsfile << "SNP" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"PP_sex" << endl;
 	plfile.close();
@@ -199,6 +199,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 //
 //
 //
+	//cout << "here" << endl;
 	std::map<std::string, std::string> first_pedigree;
 	std::map<std::string, std::string> iter_pedigree;
 	int firstpedflag = 0;
@@ -229,6 +230,9 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 				else
 				{
 					verify_pedigrees(first_pedigree);
+					pedlength = first_pedigree.size();
+					snpsperloop = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
+					snps.reserve(snpsperloop);
 				}
 				firstpedflag +=1;
 				iter_pedigree.clear();					
@@ -249,10 +253,11 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 				{
 					vector<string> fields = split(line, '\t');
 					stringstream ss1,ss2;
-					ss1 << fields[3] << "\t" << fields[4];
+					ss1 << fields[3] << ":" << fields[4];
 					ss2 << fields[3] << "\t" << fields[4] << "\t" << fields[5] << "\t" << fields[6] << "\t" << fields[7];
 					
-
+					//cout << firstpedflag << endl;
+					//cout << first_pedigree.size() << ":" << iter_pedigree.size() << endl;
 					if (l.chromosome == chrom && l.position == pos)
 					{
 						if (firstpedflag != 0)
@@ -298,6 +303,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 							
 							if (firstpedflag != 0)
 							{
+								//cout << "hi" << endl;
 								try
 								{
 									if (!map_compare(first_pedigree, iter_pedigree))
@@ -313,7 +319,13 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 							}
 							else
 							{
+								//for (auto ped=first_pedigree.begin(); ped!=first_pedigree.end(); ped++)
+								//	cout << ped->second <<endl;
+								//cout << endl;
 								verify_pedigrees(first_pedigree);
+								pedlength = first_pedigree.size();
+								snpsperloop = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
+								snps.reserve(snpsperloop);								
 							}
 							firstpedflag +=1;
 							iter_pedigree.clear();					

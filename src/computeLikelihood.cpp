@@ -368,8 +368,8 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 //	{
 ////		plfile.close();
 ////		plsfile.close();
-		ofstream plfile (filename+"_pedigreelikelihoods.txt", ios::out|ios::app  );
-		ofstream plsfile (filename+"_snpScores.txt", ios::out|ios::app  );
+		ofstream plfile (filename+".pedigreelikelihoods", ios::out|ios::app  );
+		ofstream plsfile (filename+".snpScores", ios::out|ios::app  );
 //	}
 
 

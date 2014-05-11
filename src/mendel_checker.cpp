@@ -144,23 +144,34 @@ int main(int argc, char* argv[]) {
 	cout << "Uniform prior : " << uniFLAG << endl;
 	cout << "Memory allocated for buffer : " << memAlloc << endl;
 	cout << "Phred score based genotype quality : " << phreds << "\n" << endl;
+	cout << "Outputs:" << endl;
+	string fname = "";
+	if (vcf !="")
+		fname = vcf;
+	else if (vcf=="" && genofilename !="" )
+		fname = genofilename;
+		
+	cout << "Pedigree likelihoods : " << fname << ".pedigreelikelihoods" << endl;
+	cout << "SNP scores : " << fname << ".snpScores\n" << endl;
 	if (alp*(1-alp)<=0)
 	{
 		cout << "Sex prior should be set to a value between 0 and 1." << endl;
 		exit (EXIT_FAILURE);
 	}
 	std::unordered_map<std::string, double> Penetrance = computePenetrance();
-	std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
-	verify_pedigrees(pedigree);
+
 	
 	if (vcf != ""){
 		//cout << "vcf" << endl;
+		std::map<std::string, std::string> pedigree = pedigree_reader((string) options.get("ped"));
+		verify_pedigrees(pedigree);		
 		read_geno((string) options.get("genofield"), bufsize, phreds, (string) options.get("vcf"), &pedigree, Penetrance, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
 	}
 	else if (vcf == "" && genofilename != "")
 	{
 		//cout << "geno" << endl;
 		fileread(options["filename"], bufsize, phreds, (double) options.get("sexPrior"), (string) options.get("uniformFLAG"));
+		//cout << "end" << endl;
 	}
 
 	sec = clock() - sec;

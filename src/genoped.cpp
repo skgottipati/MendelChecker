@@ -22,7 +22,7 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
     std::map<std::string, std::string> pedigree_str;
     if (file.is_open()){
     	file.seekg (0, ios::beg);
-        cout << "Reading pedigree file." << endl;
+        //cout << "Reading pedigree file." << endl;
         string line;
         while(getline(file, line))
         {
@@ -191,7 +191,7 @@ std::string get_FileName(const std::string strPath)
 {
 	//size_t iLastSeparator = 0;
 //	cout << strPath.substr(iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0 << endl;
-	cout << strPath.size()  << "\t" << strPath.find_last_of(".") << endl;
+//	cout << strPath.size()  << "\t" << strPath.find_last_of(".") << endl;
 //	return strPath.substr((iLastSeparator = strPath.find_last_of("/")) != std::string::npos ? iLastSeparator + 1 : 0, strPath.size() - strPath.find_last_of("."));
 	return strPath.substr(0, strPath.find_last_of("."));
 }
@@ -202,7 +202,7 @@ std::string get_FileName(const std::string strPath)
 void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, const std::map<std::string, std::string>* pedigree, std::unordered_map<std::string, double> Penetrance, double alpha, string unfFLAG){
     int pedlength = pedigree->size();
     int numsnps = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
-    cout << "numsnps:" << numsnps << endl;
+    //cout << "numsnps:" << numsnps << endl;
     ifstream file (vcfname, ios::in|ios::ate);
     std::unordered_map<std::string, std::string> pedigree_str;
     std::vector<string> genotypes;
@@ -218,7 +218,7 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
     vector< LINE> q;
     string famid;
 
-    string filename = vcfname;
+    string filename = get_FileName(vcfname);
     //ofstream mfglfile (filename+"_meanFounderGL.txt", ios::out );
     //mfglfile << "SNPID" << "\t" << "FOUNDERSwData" << "\t" ;
     //for (auto gt = genotypes.begin(); gt != genotypes.end(); gt++)
@@ -241,15 +241,15 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
     //ulfile << "SNPID" << "\t" << "OFFSPRINGS" << "\t"  << "uninfL" << endl;
     //ulfile.close();
 
-    ofstream plfile (filename+"_pedigreelikelihoods.txt", ios::out);
+    ofstream plfile (filename+".pedigreelikelihoods", ios::out);
     plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO" << endl;
-    ofstream plsfile (filename+"_snpScores.txt", ios::out  );
+    ofstream plsfile (filename+".snpScores", ios::out  );
 //	plsfile << "SNPID" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"LRT" << "\t" << "dof" << "\t" << "Pvalue" << endl;
     plsfile << "SNP" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"PP_sex" << endl;
     plfile.close();
     plsfile.close();
         
-        
+    //ofstream gpfile (filename+"_genoped", ios::out);    
     if (file.is_open()){
     	file.seekg (0, ios::beg);
 //        cout << "Reading VCF file." << endl;
@@ -272,10 +272,10 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
                     vector<string> fields = split(line, '\t');
                     samples.reserve(fields.size()-9);
                     samples.assign(fields.begin()+9, fields.end());
-                    cout << samples.size() << " samples were found in the VCF file." << endl;
-                    for (auto sam = samples.begin(); sam!= samples.end(); sam++ )
-                        cout << *sam << "\t";
-                    cout << endl;
+                    //cout << samples.size() << " samples were found in the VCF file." << endl;
+                    //for (auto sam = samples.begin(); sam!= samples.end(); sam++ )
+                    //    cout << *sam << "\t";
+                    //cout << endl;
                     line.clear();
                     fields.clear();
                 }
@@ -355,8 +355,9 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
                         vector<string> pedkey = split(ped->first, ":");
                         std::stringstream sspedsnp;
                         sspedsnp << chrom << "\t" << pos << "\t" << snpid << "\t" << ped->second << "\t" << sample_GLs.at(pedkey.at(1));
-//                        cout << sspedsnp.str() << endl;
+                        //cout << sspedsnp.str() << endl;
                         string line = sspedsnp.str();
+			//gpfile << line << endl;
                         LINE l;
                         l.setelem(line);
 //                        cout << l.familyid << "\t" << l.chromosome << "\t" << l.position << endl;
@@ -428,6 +429,7 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
     founders.clear();
     
     file.close();
+    //gpfile.close();
 }
 
 

@@ -41,6 +41,7 @@ void verify_nuclear_family(std::vector<std::string> fam){
     string parind = "";
     //cout << fam.size() << endl;
     for (auto it = fam.begin(); it!= fam.end(); it++){
+        //cout << *it << endl;
         fields = split(*it, "\t");
         //cout << fields.at(1) << "\t" << "a" << fields.at(4) << "a" << endl;
         if (fields.at(0) =="")
@@ -103,9 +104,13 @@ void verify_pedigrees(std::map<std::string, std::string> pedigree){
     unsigned int pedind = 1;
     //cout << pedigree.size() << endl;
     //cout << "Running verification of pedigree file." << endl;
-
+    //for (auto it=pedigree.begin(); it!=pedigree.end(); it++)
+    //    cout << it->second << endl;
+    //cout << endl;
     for (auto it=pedigree.begin(); it!=pedigree.end(); it++){
+        //cout << it->second << endl;
         famidped = split(it->first, ":");
+        //cout << famidped.at(0) << "\t" << famidped.at(1) << endl;
         if (famid == famidped.at(0))
         {
             fam.emplace_back(it->second);
