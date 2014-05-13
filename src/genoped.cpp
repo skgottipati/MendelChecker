@@ -26,17 +26,21 @@ std::map<std::string, std::string> pedigree_reader(string pedfilename){
         string line;
         while(getline(file, line))
         {
-                if (line.substr(0,1) != "#"){
-                    vector<string> fields = split(line, '\t');
-                    std::stringstream ss2;
-                    ss2 << fields[0] << "\t" << fields[1] << "\t" << fields[2] << "\t" << fields[3] << "\t" << fields[4];
-                    std::string s2 = ss2.str();
-                    std::stringstream ss1;
-                    ss1 << fields[0] << ":" << fields[1];
-                    std::string s1 = ss1.str();
-                    pedigree_str.insert(std::make_pair(s1, s2));
-                    //cout << fields[0] << ":" << fields[1] << "\t" << line << endl;
-                }
+	    if (line.empty())
+	    {
+		continue;
+	    }	    
+	    else if (line.substr(0,1) != "#"){
+		vector<string> fields = split(line, '\t');
+		std::stringstream ss2;
+		ss2 << fields[0] << "\t" << fields[1] << "\t" << fields[2] << "\t" << fields[3] << "\t" << fields[4];
+		std::string s2 = ss2.str();
+		std::stringstream ss1;
+		ss1 << fields[0] << ":" << fields[1];
+		std::string s1 = ss1.str();
+		pedigree_str.insert(std::make_pair(s1, s2));
+		//cout << fields[0] << ":" << fields[1] << "\t" << line << endl;
+	    }
         }
         file.close();
     }
@@ -256,6 +260,11 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
         string line;
         while(1){
             if(!getline(file, line)){
+		if (snps.empty())
+		{
+			cerr << "No SNP's found" << endl;
+			exit (EXIT_FAILURE);
+		}		
 //                cout << line << "break" << endl; 						
                 //pp.emplace_back(pl);
                 //snps.emplace_back(pp);
@@ -263,6 +272,10 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
                 new_compute_likelihood(snps, founders, Penetrance, outfilename, alpha, unfFLAG, phredFLAG);
                 break;                
             }
+	    else if (line.empty())
+	    {
+		continue;
+	    }
             else {
                 if (line.substr(0,2) == "##"){
                     line.clear();
@@ -293,13 +306,13 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
                     alleles.resize(alt.size()+1);
                     std::copy(alt.begin(), alt.end(), alleles.begin()+1);
                     vector<string> format = split(fields.at(8), ':');
-                    int GTindex = -1;
+                    //int GTindex = -1;
                     int PLindex = -1;
                     int runind = 0;
                     for (auto ind=format.begin(); ind != format.end(); ind++)
                     {
-                        if (*ind == "GT")
-                            GTindex = runind;
+                        //if (*ind == "GT")
+                        //    GTindex = runind;
                         if (*ind == genofield)
                             PLindex = runind;
                         runind = runind + 1;

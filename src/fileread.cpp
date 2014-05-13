@@ -39,7 +39,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 	vector< vector <vector <LINE>>> snps;
 
 	int pedlength;
-	int snpsperloop;
+	int snpsperloop=2;
 	//cout << "numsnps:" << snpsperloop << endl;	
 	//snps.reserve(snpsperloop);
 
@@ -212,6 +212,11 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 			string line;
 			if (!getline(file, line))
 			{
+				if (snps.empty())
+				{
+					cerr << "No SNP's found" << endl;
+					exit (EXIT_FAILURE);
+				}
 				if (firstpedflag != 0)
 				{
 					try
@@ -242,6 +247,10 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 				founders.emplace_back(q);
 				new_compute_likelihood(snps, founders, Penetrance, outfilename, alpha, unfFLAG, phredFLAG);
 				break;
+			}
+			else if (line.empty())
+			{
+				continue;
 			}
 			else
 			{

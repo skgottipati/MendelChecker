@@ -109,7 +109,7 @@ int main(int argc, char* argv[]) {
 		cout << "No memory has been allocated." << endl;
 		exit (EXIT_FAILURE);
 	}
-	if (foundat == -1)
+	if (foundat == std::string::npos)
 	{
 		cout << "Error in memory allocation input. Input values can only be in GB units, ex: 8GB" << endl;
 		exit (EXIT_FAILURE);
