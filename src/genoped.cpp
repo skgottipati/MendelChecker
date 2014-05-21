@@ -246,10 +246,10 @@ void read_geno(string genofield, int bufsize, string phredFLAG, string vcfname, 
     //ulfile.close();
 
     ofstream plfile (outfilename+".pedigreelikelihoods", ios::out);
-    plfile << "SNPID" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO" << endl;
+    plfile << "CHR" << "\t" << "POS" << "\t" << "SNP" << "\t" << "FAMID" << "\t" << "AutoL" << "\t" << "SexL" << "\t"<< "AutoUninfL" << "\t"<< "SexUninfL" << "\t" << "AutoRATIO" << "\t" << "SexRATIO" << endl;
     ofstream plsfile (outfilename+".snpScores", ios::out  );
 //	plsfile << "SNPID" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"LRT" << "\t" << "dof" << "\t" << "Pvalue" << endl;
-    plsfile << "SNP" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"PP_sex" << endl;
+    plsfile << "CHR" << "\t" << "POS" << "\t" << "SNP" << "\t" << "AutoSCORE" <<  "\t" << "SexSCORE" << "\t" << "AutoPedL" << "\t" << "SexPedL" << "\t" <<"PP_sex" << endl;
     plfile.close();
     plsfile.close();
         
