@@ -212,11 +212,6 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 			string line;
 			if (!getline(file, line))
 			{
-				if (snps.empty() && firstpedflag == 0)
-				{
-					cerr << "No SNP's found" << endl;
-					exit (EXIT_FAILURE);
-				}
 				if (firstpedflag != 0)
 				{
 					try
@@ -239,7 +234,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 					}							
 				}
 				else
-				{
+				{					
 					verify_pedigrees(first_pedigree);
 					pedlength = first_pedigree.size();
 					snpsperloop = (1024/(double) pedlength)*1024*1024*((double) bufsize/1000);
@@ -251,6 +246,11 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 				pp.emplace_back(pl);
 				snps.emplace_back(pp);
 				founders.emplace_back(q);
+				if (snps.empty())
+				{
+					cerr << "No SNP's found" << endl;
+					exit (EXIT_FAILURE);
+				}				
 				new_compute_likelihood(snps, founders, Penetrance, outfilename, alpha, unfFLAG, phredFLAG);
 				break;
 			}
