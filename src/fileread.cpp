@@ -212,7 +212,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 			string line;
 			if (!getline(file, line))
 			{
-				if (snps.empty())
+				if (snps.empty() && firstpedflag == 0)
 				{
 					cerr << "No SNP's found" << endl;
 					exit (EXIT_FAILURE);
@@ -223,6 +223,12 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 					{
 						if (!map_compare(first_pedigree, iter_pedigree))
 						{
+							//for (auto ped = first_pedigree.begin(); ped!= first_pedigree.end(); ped++)
+							//	cout << ped->first << " : " << ped->second << endl;
+							//cout << "\n\n" << endl;
+							//for (auto ped = iter_pedigree.begin(); ped!= iter_pedigree.end(); ped++)
+							//	cout << ped->first << " : " << ped->second << endl;								
+							//cout << "first" << endl;
 							throw "Pedigrees across SNP's do not match.";
 						}
 					}
@@ -317,6 +323,7 @@ void fileread(string fname, int bufsize, string phredFLAG, double alpha, string 
 								{
 									if (!map_compare(first_pedigree, iter_pedigree))
 									{
+										//cout << "second" << endl;
 										throw "Pedigrees across SNP's do not match.";
 									}
 								}
