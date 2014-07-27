@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 	//}
 
 #ifndef DISABLE_USAGE
-  const string usage = "\nMendelChecker -f genoPedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior] \nMendelChecker -v vcfFile -p pedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior]";
+  const string usage = "\nMendelChecker -f genoPedFile [-o outputFile] [-g genotypeProbabilityFormat ] [-a sexPrior] [-u useUniformPrior] \nMendelChecker -v vcfFile -p pedFile [-o outputFile] [-g genotypeProbabilityFormat ] -a sexPrior [-u useUniformPrior]";
 #else
   const string usage = SUPPRESS_USAGE;
 #endif
@@ -104,11 +104,11 @@ int main(int argc, char* argv[]) {
 	parser.add_option("-v", "--vcf") .dest("vcf") .type("string") .set_default("") .help("input vcf file name with path") .metavar("FILE");
 	parser.add_option("-p", "--ped") .dest("ped") .type("string") .set_default("") .help("input ped file name with path") .metavar("FILE");
 	parser.add_option("-o", "--out") .dest("outdir") .type("string") .set_default("") .help("output file name with path") .metavar("FILE");
-	parser.add_option("-m", "--memoryAlloc") .dest("memoryAlloc") .type("string") .set_default("1GB") .help("Set the size of usable memory (default: %default) by the program");
+	parser.add_option("-m", "--memoryAlloc") .dest("memoryAlloc") .type("string") .set_default("1GB") .help("size of usable memory (default: %default) by the program");
 	parser.add_option("-g", "--genoProb") .dest("genofield") .type("string") .set_default("PL") .help("genotype probability format, options: PL, GL, GP (default: %default)");
-	parser.add_option("-s", "--phredScore") .dest("phredScore") .type("string") .set_default("true") .help("Genotype quality as phred score (default: %default)");
-	parser.add_option("-a", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("prior probability of sex-linkage(default: %default)");
-	parser.add_option("-u", "--uniform") .dest("uniformFLAG") .type("string").help("use uniform prior instead of expected population genotype frequencies (default: %default") .set_default("false") .metavar("STRING");
+	parser.add_option("-s", "--phredScore") .dest("phredScore") .type("string") .set_default("true") .help("genotype quality as phred score (default: %default)");
+	parser.add_option("-a", "--sexPrior") .action("store") .dest("sexPrior") .type("double") .set_default(0.05) .help("prior probability of sex-linkage (default: %default)");
+	parser.add_option("-u", "--uniform") .dest("uniformFLAG") .type("string").help("use uniform prior instead of expected population genotype frequencies (default: %default)") .set_default("false") .metavar("STRING");
 	Values& options = parser.parse_args(argc, argv);
 	if (argc <2)
 	{

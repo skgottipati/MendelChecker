@@ -432,7 +432,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 			inflik_A = cart_product(glpv, Penetrance, "A");
 			inflik_X = cart_product(glpv, Penetrance, "X");
 //			plfile << left << setw(10) << plsnpid << setw(10) << plfamid << setw(15) << setprecision(6) << inflik_A << setw(15) << setprecision(6) <<  inflik_X << setw(15) << setprecision(6) << (*vecp)[famkeyA] << setw(15) << setprecision(6) << (*vecp)[famkeyX] << left << setw(15) << setprecision(6) << inflik_A/(*vecp)[famkeyA] << left << setw(15) << setprecision(6) << inflik_X/(*vecp)[famkeyX]<< right << setw(15) << setprecision(10) << ((long int) clock()-sec) << endl; //time(NULL) - seconds << endl;
-			plfile << left << setw(10) << indchrompos->chromosome << "\t" << setw(20) << indchrompos->position << "\t" << setw(15) << plsnpid << "\t" << setw(10) << "\t" <<  plfamid << "\t" << setw(15) << setprecision(6) << inflik_A << "\t" <<  setw(15) << setprecision(6) <<  inflik_X << "\t" << setw(15) << setprecision(6) << (*vecp)[famkeyA] << "\t" << setw(15) << setprecision(6) << (*vecp)[famkeyX] << "\t" <<left << setw(15) << setprecision(6) << inflik_A/(*vecp)[famkeyA] << "\t" <<left << setw(15) << setprecision(6) << inflik_X/(*vecp)[famkeyX]<< "\n"; //<<right << setw(15) << setprecision(10) <<  //((long int) clock()-sec) << "\n"; //time(NULL) - seconds << endl;
+			plfile <<  indchrompos->chromosome << "\t" <<  indchrompos->position << "\t" <<  plsnpid << "\t" <<  plfamid << "\t" <<  inflik_A << "\t" <<  inflik_X << "\t" <<  (*vecp)[famkeyA] << "\t" <<  (*vecp)[famkeyX] << "\t" << inflik_A/(*vecp)[famkeyA] << "\t" <<  inflik_X/(*vecp)[famkeyX]<< endl; //<<right << setw(15) << setprecision(10) <<  //((long int) clock()-sec) << "\n"; //time(NULL) - seconds << endl;
 			//pedlrtA = log(inflik_A); ///(*vecp)[famkeyA]);
 			//pedlrtX = log(inflik_X); ///(*vecp)[famkeyX]);
 			pscoreA += log(inflik_A/(*vecp)[famkeyA]);
@@ -454,7 +454,7 @@ void new_compute_likelihood(vector< vector <vector <LINE>>> snps, vector< vector
 //		long double denomratio = alpha/(alpha+(1-alpha)*exp(pedLAut - pedLSex));
 //		plsfile << left  << plsnpid << right << setw(15) << setprecision(6) << pscoreA << right << setw(15) << setprecision(6) << pscoreX << right << setw(15) << setprecision(6) << LLRstatistic << right << setw(15) << setprecision(6) <<  pedigree << right << setw(15) << setprecision(6) <<  bchisqr(pedigree, LLRstatistic) << endl;
 //		plsfile << plsnpid << "\t" << setw(15) << setprecision(6) << pscoreA << "\t" << setw(15) << setprecision(6) << pscoreX << "\t"  << setw(15) << setprecision(6) << pedLAut << "\t"  << setw(15) << setprecision(6) << pedLSex << "\t"<< setw(15) << setprecision(6) << LLRstatistic << "\t" << setw(15) << setprecision(6) <<  pedigree << "\t" << setw(15) << setprecision(6) <<  bchisqr(pedigree, LLRstatistic) << "\n";
-		plsfile << indchrompos->chromosome << "\t" << setw(20) << indchrompos->position << "\t" << setw(15) << plsnpid << "\t" << setw(15) << setprecision(6) << pscoreA << "\t" << setw(15) << setprecision(6) << pscoreX << "\t"  << setw(15) << setprecision(6) << exp(pedLAut) << "\t"  << setw(15) << setprecision(6) << exp(pedLSex) << "\t"<< setw(15) << setprecision(6) << posterior_Prob_Sex_linkage   << "\n";
+		plsfile << indchrompos->chromosome << "\t" << indchrompos->position << "\t" <<  plsnpid << "\t" << pscoreA << "\t"  << pscoreX << "\t"  <<  exp(pedLAut) << "\t"  <<  exp(pedLSex) << "\t"<<  posterior_Prob_Sex_linkage   << endl;
 //		cout << snp_count++ << endl;
 //		pedlrtfile << "\n";
 	}	
