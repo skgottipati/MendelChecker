@@ -39,10 +39,23 @@ void LINE::setelem(string line){
 //		GL[genotypes[i]]= atoi(w.c_str());
 	}
 	//cout << endl;
-//	for (auto pos=GL.begin(); pos!=GL.end(); pos++){
-//		cout << pos->first << ":" << pos->second << "\t";
-//	}
-//	cout << endl;
+	//for (auto pos=GL.begin(); pos!=GL.end(); pos++){
+	//	cout << pos->first << ":" << pos->second << "\t";
+	//}
+	//cout << endl;
+			
+	try
+	{
+		for (auto pos=GL.begin(); pos!=GL.end(); pos++){
+			if (pos->second != -1 && pos->second <0)
+				throw "Genotype probability is less than 1.";
+		}		
+	}
+	catch(const char* Message)
+	{
+		cerr << "Error: " << Message << endl;
+		exit (EXIT_FAILURE);
+	}	
 //	return GL;
 //	cout << GL.size() << endl;
 	GLs = GL;

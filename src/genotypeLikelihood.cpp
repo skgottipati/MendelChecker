@@ -73,8 +73,7 @@ void GLPROB::setelem(LINE& line, map<string, long double>& fm, string likelihood
 		// this->xlg = "HET";
 	// else if (line.sex == 0)
 		// this->xlg = "UNK";
-		
-		
+			
 	try
 	{
 		for (auto pos=this->GLs.begin(); pos!=this->GLs.end(); pos++){
@@ -87,7 +86,6 @@ void GLPROB::setelem(LINE& line, map<string, long double>& fm, string likelihood
 		cerr << "Error: " << Message << endl;
 		exit (EXIT_FAILURE);
 	}		
-		
 
 	if (likelihoodFLAG == "INF")
 		if (((line.GLs.begin()))->second == -1)
@@ -96,10 +94,10 @@ void GLPROB::setelem(LINE& line, map<string, long double>& fm, string likelihood
 			this->GLs = phred2prob(line, phredFLAG);
 	else if (likelihoodFLAG == "UNINF")
 		this->GLs = fm;
-
-//	for (auto pos=this->GLs.begin(); pos!=this->GLs.end(); pos++){
-//		cout << pos->first << ":" << pos->second << "\t";
-//	}
-//	cout << endl;
+	//cout << line.chromosome << "\t" << line.position << "\t" << line.snpid << "\t" << line.individualid << "\t" ;
+	//for (auto pos=this->GLs.begin(); pos!=this->GLs.end(); pos++){
+	//	cout << pos->first << ":" << pos->second << "\t";
+	//}
+	//cout << endl;
 
 }
